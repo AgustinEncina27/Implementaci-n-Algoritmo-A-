@@ -1,39 +1,58 @@
 from crearGrafo import *
 from nodo import *
+import copy
 
 listaAbiertos=[]
 listaCerrados=[]
 nodoInicial= Nodo
 
-def encontrarCamino():
-    print('Encontrar Camino')
+def propagar():
+    pass
+
+def encontrarCamino(nodoFinal):
+    caminoFinal=[]
+    caminoFinal.append(nodoFinal)
+    nodoRecorrer = nodoFinal.padre
+    while(not nodoRecorrer.inicial):
+        caminoFinal.append(nodoRecorrer)
+        nodoRecorrer = nodoRecorrer.padre
+    if(nodoRecorrer.inicial):
+        caminoFinal.append(nodoRecorrer)
+    print('El camino final generado es: ')
+    for mostrarCamino in caminoFinal:
+        print(mostrarCamino.mostrarId())
     return 0
 
 def generarSucesores(nodo):
+    print('------------')
     sucesor = None
     for aux in nodo.nodosRelacionados:
-        bandera=1
-        sucesor = aux[0]
+        bandera = 1
+        sucesor = copy.deepcopy(aux[0])
         sucesor.padre = nodo
         sucesor.g = nodo.g + aux[1]
         sucesor.calcularF()
         for nodoAux in listaAbiertos:
             if(nodoAux.id == sucesor.id):
                 bandera=0
-                viejo = nodoAux
-                if(viejo.f>sucesor.f):
-                    listaAbiertos.remove(viejo)
-                    listaAbiertos.append(sucesor)
+                nodo.sucesores.append(nodoAux)
+                if(nodoAux.f>sucesor.f):
+                    nodoAux.padre = nodo
+                    nodoAux.g = sucesor.g
+                    nodoAux.calcularF()
         if(bandera):
             for nodoAuxCerrados in listaCerrados:
                 if(nodoAuxCerrados.id == sucesor.id):
                     bandera=0
-                    viejo = nodoAuxCerrados
-                    if(viejo.f>sucesor.f):
-                        print('Entro a Cerrados')
-                        pass
+                    nodo.sucesores.append(nodoAuxCerrados)
+                    if(nodoAuxCerrados.f>sucesor.f and (not nodoAuxCerrados.inicial)):
+                        nodoAuxCerrados.padre = nodo
+                        nodoAuxCerrados.g = sucesor.g
+                        nodoAuxCerrados.calcularF()
+                        propagar()
         if(bandera):
             listaAbiertos.append(sucesor)
+            nodo.sucesores.append(sucesor)
 
 
 def encontrarMejorNodo():
@@ -50,16 +69,8 @@ for nodo in grafo:
 nodoInicial.g=0
 nodoInicial.f=nodoInicial.h+nodoInicial.g
 listaAbiertos.append(nodoInicial)
-print('------------')
-print('id ' + str(listaAbiertos[0].id))
-print('h ' + str(listaAbiertos[0].h))
-print('g ' + str(listaAbiertos[0].g))
-print('f ' + str(listaAbiertos[0].f))
-print('------------')
 banderaFinal = 1
 
-
-contador=0
 #bucle infinito
 while(len(listaAbiertos)!=0 and banderaFinal):
     mejorNodo = encontrarMejorNodo()
@@ -71,15 +82,14 @@ while(len(listaAbiertos)!=0 and banderaFinal):
         nodoAEliminar=nodoAEliminar+1
     listaCerrados.append(mejorNodo)
     if(mejorNodo.final==True):
-        banderaFinal = encontrarCamino()
+        banderaFinal = encontrarCamino(mejorNodo)
     else:
         generarSucesores(mejorNodo)
-    if(contador==5):
-        exit()
-    #contador=contador+1
+    print('////////////')
     for elementos in listaAbiertos:
         print(elementos.mostrarNodo())
     print('////////////')
+    print('++++++++++')
     for elementosCerrados in listaCerrados:
         print(elementosCerrados.mostrarNodo())
     print('++++++++++')

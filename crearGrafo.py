@@ -13,7 +13,7 @@ nodoE = Nodo(5,20)
 nodoF = Nodo(6,0,False,True)
 
 nodoA.nodosRelacionados = [[nodoB,15],[nodoD,50],[nodoE,50]]
-nodoB.nodosRelacionados = [nodoA,15],[nodoC,50],[nodoD,35],[nodoE,10],[nodoF,100]
+nodoB.nodosRelacionados = [[nodoA,15],[nodoC,50],[nodoD,35],[nodoE,10],[nodoF,100]]
 nodoC.nodosRelacionados = [[nodoB,55],[nodoD,30],[nodoF,50]]
 nodoD.nodosRelacionados = [[nodoA,50],[nodoC,30],[nodoE,5],[nodoB,35]]
 nodoE.nodosRelacionados = [[nodoA,50],[nodoB,10],[nodoD,5]]

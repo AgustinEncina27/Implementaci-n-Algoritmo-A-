@@ -25,4 +25,8 @@ class Nodo:
         if(self.padre!=None):
             strNodo = strNodo + ' Padre:' + str(self.padre.id)
         return strNodo
+
+    def mostrarId(self):
+        strId = str(self.id)
+        return strId
     
