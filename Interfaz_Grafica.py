@@ -19,14 +19,17 @@ for i in range(a):
 	G.add_node(i)
 
 #Creación aleatoria de aristas con Bernoulliy número aleatorios enteros para el peso de cada arista 
-p=0.7
+p=0.3
 for node1 in G.nodes():
 	for node2 in G.nodes():
 		if node1<node2 and bernoulli.rvs(p=p):
 			G.add_weighted_edges_from([(node1,node2,random.randint(0, 100))])
 
+#contiene la posicion de cada nodo, con esta funcion ponemos una semilla para asi no se juntan tanto los nodos
+pos = nx.random_layout(G,seed=7)
 
-pos = nx.spring_layout(G,seed=7)
+#muestra las coordenadas del nodo 0
+print(pos[0])
 
 #Estilos de los nodos
 nx.draw_networkx_nodes(G, pos, node_size=200,node_color="yellow")
@@ -45,10 +48,12 @@ nx.draw_networkx_edge_labels(G,pos, edge_labels, font_size=6)
 #Muestra el grafo
 plt.show()
 
-
 #Muestra Todos los hijos
 for n in G.neighbors(0):
 	print ("Vecinos de 1: ", n)
+
+#muestra las relaciones que tiene y el peso de cada relacion
+print (G.__getitem__(0))
 
 #Para obtener el peso de la relación
 print ("Peso de la relacion entre 0 y 1: ", G[0][1])
