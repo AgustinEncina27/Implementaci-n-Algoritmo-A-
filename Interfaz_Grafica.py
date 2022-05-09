@@ -28,9 +28,6 @@ for node1 in G.nodes():
 #contiene la posicion de cada nodo, con esta funcion ponemos una semilla para asi no se juntan tanto los nodos
 pos = nx.random_layout(G,seed=7)
 
-#muestra las coordenadas del nodo 0
-print(pos[0])
-
 #Estilos de los nodos
 nx.draw_networkx_nodes(G, pos, node_size=200,node_color="yellow")
 
@@ -48,12 +45,27 @@ nx.draw_networkx_edge_labels(G,pos, edge_labels, font_size=6)
 #Muestra el grafo
 plt.show()
 
+#muestra las coordenadas del nodo 0 
+#Resultado [0.07630829 0.7799188 ] .Retorna un dict
+print(pos[0])
+
+#Muestra todo los nodos del grafico
+#Resultado[0, 1, 2]. Retorna un dict
+print(G.nodes())
+
+#Muestra todo los nodos del grafico
+#Resultado[0, 1, 2].Retorna una lista 
+print(list(G.nodes))
+
 #Muestra Todos los hijos
+#Resultado Vecinos de 1:  4. Retorna un iterador
 for n in G.neighbors(0):
 	print ("Vecinos de 1: ", n)
 
 #muestra las relaciones que tiene y el peso de cada relacion
+#Resultado {1: {'weight': 35}}.Retorna el tipo de dato  dict
 print (G.__getitem__(0))
 
 #Para obtener el peso de la relación
+#Resultado Peso de la relacion entre 0 y 1:  {'weight': 35}
 print ("Peso de la relacion entre 0 y 1: ", G[0][1])
