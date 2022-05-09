@@ -7,7 +7,17 @@ listaCerrados=[]
 nodoInicial= Nodo
 
 def propagar(nodoAuxCerrados):
-    pass
+    if(nodoAuxCerrados.sucesores and (not nodosVecinos in listaAbiertos)):
+        for nodosVecinos in nodoAuxCerrados.sucesores:
+            caminoViejo = copy.deepcopy(nodosVecinos)
+            caminoNuevo = copy.deepcopy(nodosVecinos)
+            if(nodoAuxCerrados==nodosVecinos.padre):
+                caminoNuevo[0].g = caminoNuevo.g + caminoNuevo[1]
+                caminoNuevo[0].calcularF()
+                if(caminoNuevo.f<caminoViejo.f):
+                    propagar(nodosVecinos[0])
+
+
 
 #Funcion para recostruir el camino optimo encontrado por el algoritmo
 def encontrarCamino(nodoFinal):
@@ -37,7 +47,7 @@ def generarSucesores(nodo):
         for nodoAux in listaAbiertos:
             if(nodoAux.id == sucesor.id):
                 bandera=0
-                nodo.sucesores.append(nodoAux)
+                nodo.sucesores.append(sucesor)
                 if(nodoAux.f>sucesor.f):
                     nodoAux.padre = nodo
                     nodoAux.g = sucesor.g
