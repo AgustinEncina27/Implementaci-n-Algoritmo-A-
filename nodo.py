@@ -11,7 +11,7 @@ class Nodo:
         self.final = final
         self.nodosRelacionados = []
         self.padre = None #Padre del nodo en el arbol de solucion
-        self.sucesores=[] 
+        self.sucesores=[]
     
     def calcularF(self):
         self.f = self.g + self.h

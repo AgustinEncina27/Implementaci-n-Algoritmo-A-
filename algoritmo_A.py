@@ -4,10 +4,9 @@ import copy
 
 listaAbiertos=[]
 listaCerrados=[]
-nodoInicial= Nodo
 
 def propagar(nodoAuxCerrados):
-    if(nodoAuxCerrados.sucesores and (not nodosVecinos in listaAbiertos)):
+    if(nodoAuxCerrados.sucesores and (not nodoAuxCerrados in listaAbiertos)):
         for nodosVecinos in nodoAuxCerrados.sucesores:
             caminoViejo = copy.deepcopy(nodosVecinos)
             caminoNuevo = copy.deepcopy(nodosVecinos)
@@ -15,8 +14,9 @@ def propagar(nodoAuxCerrados):
                 caminoNuevo[0].g = caminoNuevo.g + caminoNuevo[1]
                 caminoNuevo[0].calcularF()
                 if(caminoNuevo.f<caminoViejo.f):
+                    nodosVecinos[0].g = nodosVecinos.g + nodosVecinos[1]
+                    nodosVecinos[0].calcularF()
                     propagar(nodosVecinos[0])
-
 
 
 #Funcion para recostruir el camino optimo encontrado por el algoritmo
@@ -47,7 +47,7 @@ def generarSucesores(nodo):
         for nodoAux in listaAbiertos:
             if(nodoAux.id == sucesor.id):
                 bandera=0
-                nodo.sucesores.append(sucesor)
+                nodo.sucesores.append(sucesor)#Cambiar por nodoAux
                 if(nodoAux.f>sucesor.f):
                     nodoAux.padre = nodo
                     nodoAux.g = sucesor.g
@@ -58,6 +58,7 @@ def generarSucesores(nodo):
                     bandera=0
                     nodo.sucesores.append(nodoAuxCerrados)
                     if(nodoAuxCerrados.f>sucesor.f and (not nodoAuxCerrados.inicial)):
+                        print('Entro a Cerrados')
                         nodoAuxCerrados.padre = nodo
                         nodoAuxCerrados.g = sucesor.g
                         nodoAuxCerrados.calcularF()
@@ -74,40 +75,33 @@ def encontrarMejorNodo():
             nodoAuxiliar = nodoRecorrer
     return nodoAuxiliar
 
+def iniciarAlgoritmo():
+    nodoInicial= Nodo
+    for nodo in grafo: #Se busca el nodo inicial de la Lista
+        if(nodo.inicial==True):
+            nodoInicial=nodo
+    nodoInicial.g=0
+    nodoInicial.f=nodoInicial.h+nodoInicial.g
+    listaAbiertos.append(nodoInicial) #Se calculan los valores y se lo agrega a la Lista Abierta
+    banderaFinal = 1
 
-for nodo in grafo: #Se busca el nodo inicial de la Lista
-    if(nodo.inicial==True):
-        nodoInicial=nodo
-nodoInicial.g=0
-nodoInicial.f=nodoInicial.h+nodoInicial.g
-listaAbiertos.append(nodoInicial) #Se calculan los valores y se lo agrega a la Lista Abierta
-banderaFinal = 1
+    while(len(listaAbiertos)!=0 and banderaFinal):
+        mejorNodo = encontrarMejorNodo() #Se busca el nodo con mejor F en cada iteracion
+        nodoAEliminar=0
+        while(nodoAEliminar<len(listaAbiertos)): #Se lo elimina de la Lista Abierta
+            nodoAbiertoAuxiliar = listaAbiertos[nodoAEliminar]
+            if(nodoAbiertoAuxiliar.id == mejorNodo.id):
+                listaAbiertos.pop(nodoAEliminar)
+            nodoAEliminar=nodoAEliminar+1
+        listaCerrados.append(mejorNodo) #Se lo agrega a la Lista Cerrada
+        if(mejorNodo.final==True): #Si se llego al nodo final se reconstruye el camino
+            banderaFinal = encontrarCamino(mejorNodo)
+        else: #Si no se llego al nodo final se buscan los sucesores del Mejor Nodo
+            generarSucesores(mejorNodo)
 
-while(len(listaAbiertos)!=0 and banderaFinal):
-    mejorNodo = encontrarMejorNodo() #Se busca el nodo con mejor F en cada iteracion
-    nodoAEliminar=0
-    while(nodoAEliminar<len(listaAbiertos)): #Se lo elimina de la Lista Abierta
-        nodoAbiertoAuxiliar = listaAbiertos[nodoAEliminar]
-        if(nodoAbiertoAuxiliar.id == mejorNodo.id):
-            listaAbiertos.pop(nodoAEliminar)
-        nodoAEliminar=nodoAEliminar+1
-    listaCerrados.append(mejorNodo) #Se lo agrega a la Lista Cerrada
-    if(mejorNodo.final==True): #Si se llego al nodo final se reconstruye el camino
-        banderaFinal = encontrarCamino(mejorNodo)
-    else: #Si no se llego al nodo final se buscan los sucesores del Mejor Nodo
-        generarSucesores(mejorNodo)
-    print('////////////')
-    for elementos in listaAbiertos:
-        print(elementos.mostrarNodo())
-    print('////////////')
-    print('++++++++++')
-    for elementosCerrados in listaCerrados:
-        print(elementosCerrados.mostrarNodo())
-    print('++++++++++')
-
-
-if(banderaFinal): #Se imprime el siguiente mensaje en caso de no encontrar el camino hasta el nodo final
-    print("No se ha encontrado una solucion")
+    mostrarGrafo()
+    if(banderaFinal): #Se imprime el siguiente mensaje en caso de no encontrar el camino hasta el nodo final
+        print("No se ha encontrado una solucion")
 
 
 
