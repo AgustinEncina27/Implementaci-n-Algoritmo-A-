@@ -1,15 +1,58 @@
-from cProfile import label
-import collections
-from tkinter import *
+import tkinter as tk
 from tkinter import ttk
+from ControladorGrafico import *
+from Interfaz_Cargar import *
+from Interfaz_principal import Principal
 
-raiz = Tk()
-raiz.title('Aplicación')
-raiz.eval('tk::PlaceWindow . center')
-ttk.Label(raiz, text='Seleccione la forma \nde crear el espacio de busqueda').grid(padx=20, pady=20, row=2, column=1)
-ttk.Button(raiz, text='Al azar').grid(row=4,column=0)
-ttk.Button(raiz, text='Elegir todo').grid(row=4,column=1)
-ttk.Button(raiz, text='Salir', command=quit).grid(row=4,column=2)
-raiz.mainloop()
+class App(tk.Tk):
+    def __init__(self):
+        super().__init__()
 
+        self.title('Implementación Algoritmo A estrella')
+        ancho_ventana = 1000
+        alto_ventana = 500
+        x_ventana = self.winfo_screenwidth() // 2 - ancho_ventana // 2
+        y_ventana = self.winfo_screenheight() // 2 - alto_ventana // 2
+        posicion = str(ancho_ventana) + "x" + str(alto_ventana) + "+" + str(x_ventana) + "+" + str(y_ventana)
+        self.geometry(posicion)
+        self.resizable(0,0)
+
+        # create a view and place it on the root window
+        self.view = Principal(self)
+
+        #view.grid(row=0, column=0, padx=10, pady=10)
+
+        # create a controller
+        self.controller = Controller(self, self.view)
+        barraMenu=Menu(self)
+        self.config(menu=barraMenu,width=300,height=300)
+        creacionGrafo=Menu(barraMenu,tearoff=0)
+        inicio=Menu(barraMenu,tearoff=0)
+        inicio.add_command(label="Volver al Pricipal", command=lambda:self.mostrarFramePrincipal())
+        creacionGrafo.add_command(label="Cargar datos(nodos y relaciones)", command=lambda:self.mostrarFrameCargar())
+        creacionGrafo.add_command(label="Aleatorio", command=lambda:self.mostrarFrameAleatorio())
+        barraMenu.add_cascade(label="Inicio",menu=inicio)
+        barraMenu.add_cascade(label="Creación del grafo",menu=creacionGrafo)
+
+        # set the controller to view
+        self.view.set_controller(self.controller)
+    
+    def mostrarFrameAleatorio(self):
+        self.view.pack_forget()
+        self.view = Aleatoria(self)
+        self.view.set_controller(self.controller)
+    
+    def mostrarFramePrincipal(self):
+        self.view.pack_forget()
+        self.view = Principal(self)
+        self.view.set_controller(self.controller)
+    
+    def mostrarFrameCargar(self):
+        self.view.pack_forget()
+        self.view = Frame_2(self)
+        self.view.set_controller(self.controller)
+
+if __name__ == '__main__':
+    app = App()
+    app.mainloop()
 
