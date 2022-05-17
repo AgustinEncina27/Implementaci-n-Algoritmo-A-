@@ -1,7 +1,9 @@
 import tkinter as tk
 from tkinter import ttk
 from ControladorGrafico import *
+from Interfaz_Mostrar_Grafo import *
 from Interfaz_Cargar import *
+from Interfaz_Mostrar_Solucion import *
 from Interfaz_principal import Principal
 
 class App(tk.Tk):
@@ -9,7 +11,7 @@ class App(tk.Tk):
         super().__init__()
 
         self.title('Implementación Algoritmo A estrella')
-        ancho_ventana = 1000
+        ancho_ventana = 500
         alto_ventana = 500
         x_ventana = self.winfo_screenwidth() // 2 - ancho_ventana // 2
         y_ventana = self.winfo_screenheight() // 2 - alto_ventana // 2
@@ -24,6 +26,8 @@ class App(tk.Tk):
 
         # create a controller
         self.controller = Controller(self, self.view)
+
+        #Menu
         barraMenu=Menu(self)
         self.config(menu=barraMenu,width=300,height=300)
         creacionGrafo=Menu(barraMenu,tearoff=0)
@@ -39,7 +43,7 @@ class App(tk.Tk):
     
     def mostrarFrameAleatorio(self):
         self.view.pack_forget()
-        self.view = Aleatoria(self)
+        self.view = Aleatoria(self,self.controller)
         self.view.set_controller(self.controller)
     
     def mostrarFramePrincipal(self):
@@ -49,7 +53,17 @@ class App(tk.Tk):
     
     def mostrarFrameCargar(self):
         self.view.pack_forget()
-        self.view = Frame_2(self)
+        self.view = Cargar(self)
+        self.view.set_controller(self.controller)
+    
+    def mostrarFrameMostrar_Grafo(self):
+        self.view.pack_forget()
+        self.view = Mostrar_Grafo(self,self.controller)
+        self.view.set_controller(self.controller)
+    
+    def mostrarFrameMostrar_Solucion(self):
+        self.view.pack_forget()
+        self.view = Mostrar_Solucion(self,self.controller)
         self.view.set_controller(self.controller)
 
 if __name__ == '__main__':

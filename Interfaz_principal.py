@@ -6,15 +6,19 @@ class Principal(tk.Frame):
     def __init__(self, parent):
         
         super().__init__(parent)
-
-        self.entrada_usuario = tk.StringVar()
-
+        ancho_ventana = 500
+        alto_ventana = 500
+        x_ventana = parent.winfo_screenwidth() // 2 - ancho_ventana // 2
+        y_ventana = parent.winfo_screenheight() // 2 - alto_ventana // 2
+        posicion = str(ancho_ventana) + "x" + str(alto_ventana) + "+" + str(x_ventana) + "+" + str(y_ventana)
+        parent.geometry(posicion)
+        parent.resizable(0,0)
         #Frames
 
         self.pack(expand=True,fill="x")
-        self.config(width="1000",height="500")
+        self.config(width="500",height="500")
         #Label
-        lbl1=Label(text="BIENVENIDO",font=("Comic Sans MS",28)).place(x=370,y=200)
+        lbl1=Label(text="BIENVENIDO",font=("Comic Sans MS",28)).place(x=130,y=200)
 
     def set_controller(self, controller):
         self.controller = controller

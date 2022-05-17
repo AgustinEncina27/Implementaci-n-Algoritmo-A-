@@ -3,25 +3,30 @@ from scipy.stats import bernoulli
 #Paquete para la implementacion de Grafos
 import networkx as nx
 #Paquete que utilizamos para gráficar los grafos
+from matplotlib.figure import Figure
+import matplotlib
+matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 #Paquete para números enteros random
 import random
 
 
+
+
 #Establece el formato del grafo
-def AtributosDeGrafo(G,pos):
+def AtributosDeGrafo(G,pos,a):
 	#Estilos de los nodos
-	nx.draw_networkx_nodes(G, pos, node_size=200,node_color="yellow")
+	nx.draw_networkx_nodes(G, pos, node_size=200,node_color="yellow",ax=a)
 
 	#Estilos de las aristas
-	nx.draw_networkx_edges(G, pos)
+	nx.draw_networkx_edges(G, pos,ax=a)
 
 	#Tamaño de los nombres de los nodos 
-	nx.draw_networkx_labels(G, pos, font_size=10)
+	nx.draw_networkx_labels(G, pos, font_size=10,ax=a)
 
 	#Agrega el peso a las aristas
 	edge_labels = nx.get_edge_attributes(G, "weight")
-	nx.draw_networkx_edge_labels(G,pos, edge_labels, font_size=6)
+	nx.draw_networkx_edge_labels(G,pos, edge_labels, font_size=6,ax=a)
 
 def CrearGraficoCarga(num,num2):
 	#Creación del grafo
@@ -45,19 +50,51 @@ def CrearGraficoCarga(num,num2):
 					if (not(G.has_edge(node1,node2))):
 						G.add_weighted_edges_from([(node1,node2,random.randint(0, 100))])
 						contador+=1
-						print("hola")
 				if(contador==b):
 					break		
 
 	#contiene la posicion de cada nodo, con esta funcion ponemos una semilla para asi no se juntan tanto los nodos
 	pos = nx.random_layout(G)
+	
+	figure = Figure(figsize=(5,4), dpi=100)
+	a = figure.add_subplot(111)
 
 	#Llama a la funcion para establecer el formato del grafo
-	AtributosDeGrafo(G,pos)
+	#Estilos de los nodos
+	nx.draw_networkx_nodes(G, pos, node_size=200,node_color="yellow",ax=a)
 
-	plt.savefig("Graph.png", format="PNG")
+	#Estilos de las aristas
+	nx.draw_networkx_edges(G, pos,ax=a)
+
+	#Tamaño de los nombres de los nodos 
+	nx.draw_networkx_labels(G, pos, font_size=10,ax=a)
+
+	#Agrega el peso a las aristas
+	edge_labels = nx.get_edge_attributes(G, "weight")
+	nx.draw_networkx_edge_labels(G,pos, edge_labels, font_size=6,ax=a)
+	
+	#j=[0, 1, 2]
+	#j.append(4)
+	#H = G.subgraph(j)
+	#posi=hierarchy_pos(H,1)
+	#Llama a la funcion para establecer el formato del grafo
+	#AtributosDeGrafo(H,posi,a)
+
+	#nx.draw(H, pos=posi)
 	#Muestra el grafo
-	plt.show()
+	#plt.show()
+
+	#plt.savefig("Graph.png", format="PNG")
+	return figure
+
+
+
+
+
+
+
+
+
 
 #muestra las coordenadas del nodo 0 
 #Resultado [0.07630829 0.7799188 ] .Retorna un dict
