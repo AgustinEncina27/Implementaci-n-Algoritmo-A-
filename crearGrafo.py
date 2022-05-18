@@ -76,7 +76,7 @@ def seleccionarGrafo():
                 if node1<node2 and bernoulli.rvs(p=p):
                     G.add_weighted_edges_from([(node1,node2,random.randint(0, 100))])
         pos = nx.random_layout(G,seed=7)
-
+        
         #Carga de los nodos en el grafo
         nodoInicial = randint(0,a)
         nodoFinal = randint(0,a-1)

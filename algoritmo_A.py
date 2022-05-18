@@ -4,77 +4,18 @@ import copy
 import networkx as nx
 import random
 import matplotlib.pyplot as plt
+import networkx as nx
+from networkx.drawing.nx_agraph import write_dot, graphviz_layout
+import matplotlib.pyplot as plt
 
 listaAbiertos=[]
 listaCerrados=[]
 Arbol=nx.Graph()
+
 listaNodosArbol=[]
 nodoInicial = None
 
-def hierarchy_pos(P, root=None, width=1., vert_gap = 0.2, vert_loc = 0, xcenter = 0.5):
 
-    '''
-    From Joel's answer at https://stackoverflow.com/a/29597209/2966723.  
-    Licensed under Creative Commons Attribution-Share Alike 
-    
-    If the graph is a tree this will return the positions to plot this in a 
-    hierarchical layout.
-    
-    G: the graph (must be a tree)
-    
-    root: the root node of current branch 
-    - if the tree is directed and this is not given, 
-      the root will be found and used
-    - if the tree is directed and this is given, then 
-      the positions will be just for the descendants of this node.
-    - if the tree is undirected and not given, 
-      then a random choice will be used.
-    
-    width: horizontal space allocated for this branch - avoids overlap with other branches
-    
-    vert_gap: gap between levels of hierarchy
-    
-    vert_loc: vertical location of root
-    
-    xcenter: horizontal location of root
-    '''
-    if not nx.is_tree(P):
-        raise TypeError('cannot use hierarchy_pos on a graph that is not a tree')
-
-    if root is None:
-        if isinstance(P, nx.DiGraph):
-            root = next(iter(nx.topological_sort(P)))  #allows back compatibility with nx version 1.11
-        else:
-            root = random.choice(list(P.nodes))
-
-    def _hierarchy_pos(P, root, width=1., vert_gap = 0.2, vert_loc = 0, xcenter = 0.5, pos = None, parent = None):
-        '''
-        see hierarchy_pos docstring for most arguments
-
-        pos: a dict saying where all nodes go if they have been assigned
-        parent: parent of this branch. - only affects it if non-directed
-
-        '''
-    
-        if pos is None:
-            pos = {root:(xcenter,vert_loc)}
-        else:
-            pos[root] = (xcenter, vert_loc)
-        children = list(P.neighbors(root))
-        if not isinstance(P, nx.DiGraph) and parent is not None:
-            children.remove(parent)  
-        if len(children)!=0:
-            dx = width/len(children) 
-            nextx = xcenter - width/2 - dx/2
-            for child in children:
-                nextx += dx
-                pos = _hierarchy_pos(P,child, width = dx, vert_gap = vert_gap, 
-                                    vert_loc = vert_loc-vert_gap, xcenter=nextx,
-                                    pos=pos, parent = root)
-        return pos
-
-            
-    return _hierarchy_pos(P, root, width, vert_gap, vert_loc, xcenter)
 
 def propagar(nodoAuxCerrados):
     if(nodoAuxCerrados.sucesores and (not nodoAuxCerrados in listaAbiertos)):
@@ -106,7 +47,7 @@ def encontrarCamino(nodoFinal):
     return 0
 
 #Funcion para evaluar cada uno de los nodos sucesores del mejor nodo de la Lista Abierta
-def generarSucesores(nodo, nodoInicial):
+def generarSucesores(nodo, nodoInicial,contador):
     print('------------')
     sucesor = None
     for aux in nodo.nodosRelacionados:
@@ -121,7 +62,7 @@ def generarSucesores(nodo, nodoInicial):
                 bandera=0
                 nodo.sucesores.append(sucesor)#Cambiar por nodoAux
                 if(nodoAux.f>sucesor.f):
-                    listaNodosArbol.remove([nodoAux.padre.id,nodoAux.id])
+                    #listaNodosArbol.remove([nodoAux.padre.id,nodoAux.id])
                     nodoAux.padre = nodo
                     nodoAux.g = sucesor.g
                     nodoAux.calcularF()
@@ -144,8 +85,16 @@ def generarSucesores(nodo, nodoInicial):
     if(not len(nodo.nodosRelacionados)==0):
         Arbol.add_edges_from(listaNodosArbol)
         print(listaNodosArbol)
-        pos = hierarchy_pos(Arbol,nodoInicial.id)    
-        nx.draw(Arbol, pos=pos, with_labels=True)
+        pos =graphviz_layout(Arbol, prog='dot')
+        nx.draw_networkx_nodes(Arbol, pos, node_size=2,node_color="yellow")
+        #nx.draw_networkx_edges(Arbol, pos)
+        nx.draw_networkx_labels(Arbol, pos, font_size=10)
+        #edge_labels = nx.get_edge_attributes(Arbol, "weight")
+        #nx.draw_networkx_edge_labels(Arbol,pos, edge_labels, font_size=6)
+        nx.draw(Arbol, pos, arrows=True)
+
+        plt.show()
+        
 
 #Funcion para encontrar el mejor nodo de la Lista Abierta, es decir, el de mejor F.
 def encontrarMejorNodo():
@@ -163,7 +112,7 @@ def iniciarAlgoritmo():
     nodoInicial.f=nodoInicial.h+nodoInicial.g
     listaAbiertos.append(nodoInicial) #Se calculan los valores y se lo agrega a la Lista Abierta
     banderaFinal = 1
-
+    contador=0
     while(len(listaAbiertos)!=0 and banderaFinal):
         mejorNodo = encontrarMejorNodo() #Se busca el nodo con mejor F en cada iteracion
         nodoAEliminar=0
@@ -176,8 +125,9 @@ def iniciarAlgoritmo():
         if(mejorNodo.final==True): #Si se llego al nodo final se reconstruye el camino
             banderaFinal = encontrarCamino(mejorNodo)
         else: #Si no se llego al nodo final se buscan los sucesores del Mejor Nodo
-            generarSucesores(mejorNodo, nodoInicial)
-            plt.show()
+            generarSucesores(mejorNodo, nodoInicial,contador)
+            contador=contador+1
+            #plt.show()
         print('////////////')
         for elementos in listaAbiertos:
             print(elementos.mostrarNodo())
