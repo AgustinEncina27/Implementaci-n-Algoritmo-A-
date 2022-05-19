@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import networkx as nx
 from networkx.drawing.nx_agraph import write_dot, graphviz_layout
 import matplotlib.pyplot as plt
+from matplotlib.figure import Figure
 
 listaAbiertos=[]
 listaCerrados=[]
@@ -17,18 +18,15 @@ listaNodosArbol=[]
 nodoInicial = None
 
 
-def propagar(nodoAuxCerrados):
+def elminarCamino(nodoAuxCerrados):
     if(nodoAuxCerrados.sucesores and (not nodoAuxCerrados in listaAbiertos)):
         for nodosVecinos in nodoAuxCerrados.sucesores:
-            caminoViejo = copy.deepcopy(nodosVecinos)
-            caminoNuevo = copy.deepcopy(nodosVecinos)
-            if(nodoAuxCerrados==nodosVecinos.padre):
-                caminoNuevo[0].g = caminoNuevo.g + caminoNuevo[1]
-                caminoNuevo[0].calcularF()
-                if(caminoNuevo.f<caminoViejo.f):
-                    nodosVecinos[0].g = nodosVecinos.g + nodosVecinos[1]
-                    nodosVecinos[0].calcularF()
-                    propagar(nodosVecinos[0])
+            if(nodosVecinos[0] in listaAbiertos and nodosVecinos[0].padre==nodoAuxCerrados):
+                elminarCamino(nodosVecinos[0])
+                listaAbiertos.remove(nodosVecinos[0])
+            if(nodosVecinos[0] in listaCerrados and nodosVecinos[0].padre==nodoAuxCerrados):
+                elminarCamino(nodosVecinos[0])
+                listaCerrados.remove(nodosVecinos[0])
 
 
 #Funcion para recostruir el camino optimo encontrado por el algoritmo
@@ -73,38 +71,30 @@ def generarSucesores(nodo, nodoInicial,contador):
                     bandera=0
                     nodo.sucesores.append(nodoAuxCerrados)
                     if(nodoAuxCerrados.f>sucesor.f and (not nodoAuxCerrados.inicial)):
-                        print('Entro a Cerrados')
-                        nodoAuxCerrados.padre = nodo
-                        nodoAuxCerrados.g = sucesor.g
-                        nodoAuxCerrados.calcularF()
-                        propagar(nodoAuxCerrados)
+                        elminarCamino(nodoAuxCerrados)
         if(bandera):
             listaAbiertos.append(sucesor)
             nodo.sucesores.append(sucesor)
             listaNodosArbol.append([nodo.id,sucesor.id])
-    if(not len(nodo.nodosRelacionados)==0):
-        Arbol.add_edges_from(listaNodosArbol)
-
-        for nodoEnElArbol in Arbol.nodes():
-            if(any(x.id == nodoEnElArbol for x in listaAbiertos)):
-                if(len(color_map)>list(Arbol.nodes()).index(nodoEnElArbol)):
-                    color_map.pop(list(Arbol.nodes()).index(nodoEnElArbol))
-                color_map.insert(list(Arbol.nodes()).index(nodoEnElArbol),'green')
-            if(any(x.id == nodoEnElArbol for x in listaCerrados)):
-                if(len(color_map)>list(Arbol.nodes()).index(nodoEnElArbol)):
-                    color_map.pop(list(Arbol.nodes()).index(nodoEnElArbol))
-                color_map.insert(list(Arbol.nodes()).index(nodoEnElArbol),'red')
-        
-        pos =graphviz_layout(Arbol, prog='dot')
-        nx.draw_networkx_nodes(Arbol, pos, node_size=2)
-        #nx.draw_networkx_edges(Arbol, pos)
-        nx.draw_networkx_labels(Arbol, pos, font_size=10)
-        #edge_labels = nx.get_edge_attributes(Arbol, "weight")
-        #nx.draw_networkx_edge_labels(Arbol,pos, edge_labels, font_size=6)
-        print(color_map)
-        nx.draw(Arbol, pos, arrows=True, node_color=color_map)
-        plt.show()
-        
+    
+def mostrarCamino():
+    Arbol.add_edges_from(listaNodosArbol)
+    for nodoEnElArbol in Arbol.nodes():
+        if(any(x.id == nodoEnElArbol for x in listaAbiertos)):
+            if(len(color_map)>list(Arbol.nodes()).index(nodoEnElArbol)):
+                color_map.pop(list(Arbol.nodes()).index(nodoEnElArbol))
+            color_map.insert(list(Arbol.nodes()).index(nodoEnElArbol),'green')
+        if(any(x.id == nodoEnElArbol for x in listaCerrados)):
+            if(len(color_map)>list(Arbol.nodes()).index(nodoEnElArbol)):
+                color_map.pop(list(Arbol.nodes()).index(nodoEnElArbol))
+            color_map.insert(list(Arbol.nodes()).index(nodoEnElArbol),'red')
+    figure = Figure(figsize=(5,4), dpi=100)
+    a = figure.add_subplot(111)
+    pos =graphviz_layout(Arbol, prog='dot')
+    nx.draw_networkx_nodes(Arbol, pos, node_size=2, ax=a)
+    nx.draw_networkx_labels(Arbol, pos, font_size=10, ax=a)
+    nx.draw(Arbol, pos, arrows=True, node_color=color_map, ax=a)
+    return figure
 
 #Funcion para encontrar el mejor nodo de la Lista Abierta, es decir, el de mejor F.
 def encontrarMejorNodo():
