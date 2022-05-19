@@ -21,7 +21,7 @@ class Nodo:
 
     def mostrarNodo(self):
         strNodo =''
-        strNodo = strNodo + 'ID:' + str(self.id) + ' G:' + str(self.g) + ' F:' + str(self.f) + ' H:' + str(self.h)
+        strNodo = strNodo + 'Nodo:' + str(self.id) + ' G:' + str(self.g) + ' F:' + str(self.f) + ' H:' + str(self.h)
         if(self.padre!=None):
             strNodo = strNodo + ' Padre:' + str(self.padre.id)
         return strNodo

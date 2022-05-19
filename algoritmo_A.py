@@ -9,9 +9,11 @@ import networkx as nx
 from networkx.drawing.nx_agraph import write_dot, graphviz_layout
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
+import tkinter as tk
 
 listaAbiertos=[]
 listaCerrados=[]
+TextoVentana = ''
 color_map = []
 Arbol=nx.Graph()
 listaNodosArbol=[]
@@ -105,6 +107,7 @@ def encontrarMejorNodo():
     return nodoAuxiliar
 
 def iniciarAlgoritmo():
+    global TextoVentana
     for nodo in grafo: #Se busca el nodo inicial de la Lista
         if(nodo.inicial==True):
             nodoInicial=nodo
@@ -128,20 +131,18 @@ def iniciarAlgoritmo():
             banderaFinal = encontrarCamino(mejorNodo)
         else: #Si no se llego al nodo final se buscan los sucesores del Mejor Nodo
             generarSucesores(mejorNodo, nodoInicial,contador)
-            contador=contador+1
-            #plt.show()
-        print('////////////')
+        contador=contador+1
+        TextoVentana = TextoVentana + 'Iteracion numero: ' + str(contador) + '\n'
+        TextoVentana = TextoVentana + 'Lista Abierta: \n'
         for elementos in listaAbiertos:
-            print(elementos.mostrarNodo())
-        print('////////////')
-        print('++++++++++')
+            TextoVentana = TextoVentana + elementos.mostrarNodo() + '\n'
+        TextoVentana = TextoVentana + 'Lista Cerrada: \n'
         for elementosCerrados in listaCerrados:
-            print(elementosCerrados.mostrarNodo())
-        print('++++++++++')
-            
-
+            TextoVentana = TextoVentana + elementosCerrados.mostrarNodo() + '\n'
+        TextoVentana = TextoVentana + '------------------------------------------ \n\n'
+    
     if(banderaFinal): #Se imprime el siguiente mensaje en caso de no encontrar el camino hasta el nodo final
         print("No se ha encontrado una solucion")
 
-
-
+def mostrarTextoSolucion():
+    return TextoVentana
