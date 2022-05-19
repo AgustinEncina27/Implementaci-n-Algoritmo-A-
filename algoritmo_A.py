@@ -1,3 +1,4 @@
+from numpy import insert
 from crearGrafo import *
 from nodo import *
 import copy
@@ -10,11 +11,10 @@ import matplotlib.pyplot as plt
 
 listaAbiertos=[]
 listaCerrados=[]
+color_map = []
 Arbol=nx.Graph()
-
 listaNodosArbol=[]
 nodoInicial = None
-
 
 
 def propagar(nodoAuxCerrados):
@@ -84,15 +84,25 @@ def generarSucesores(nodo, nodoInicial,contador):
             listaNodosArbol.append([nodo.id,sucesor.id])
     if(not len(nodo.nodosRelacionados)==0):
         Arbol.add_edges_from(listaNodosArbol)
-        print(listaNodosArbol)
+
+        for nodoEnElArbol in Arbol.nodes():
+            if(any(x.id == nodoEnElArbol for x in listaAbiertos)):
+                if(len(color_map)>list(Arbol.nodes()).index(nodoEnElArbol)):
+                    color_map.pop(list(Arbol.nodes()).index(nodoEnElArbol))
+                color_map.insert(list(Arbol.nodes()).index(nodoEnElArbol),'green')
+            if(any(x.id == nodoEnElArbol for x in listaCerrados)):
+                if(len(color_map)>list(Arbol.nodes()).index(nodoEnElArbol)):
+                    color_map.pop(list(Arbol.nodes()).index(nodoEnElArbol))
+                color_map.insert(list(Arbol.nodes()).index(nodoEnElArbol),'red')
+        
         pos =graphviz_layout(Arbol, prog='dot')
-        nx.draw_networkx_nodes(Arbol, pos, node_size=2,node_color="yellow")
+        nx.draw_networkx_nodes(Arbol, pos, node_size=2)
         #nx.draw_networkx_edges(Arbol, pos)
         nx.draw_networkx_labels(Arbol, pos, font_size=10)
         #edge_labels = nx.get_edge_attributes(Arbol, "weight")
         #nx.draw_networkx_edge_labels(Arbol,pos, edge_labels, font_size=6)
-        nx.draw(Arbol, pos, arrows=True)
-
+        print(color_map)
+        nx.draw(Arbol, pos, arrows=True, node_color=color_map)
         plt.show()
         
 
@@ -122,6 +132,8 @@ def iniciarAlgoritmo():
                 listaAbiertos.pop(nodoAEliminar)
             nodoAEliminar=nodoAEliminar+1
         listaCerrados.append(mejorNodo) #Se lo agrega a la Lista Cerrada
+        if(mejorNodo.inicial):
+            color_map.insert(0,'red')
         if(mejorNodo.final==True): #Si se llego al nodo final se reconstruye el camino
             banderaFinal = encontrarCamino(mejorNodo)
         else: #Si no se llego al nodo final se buscan los sucesores del Mejor Nodo
