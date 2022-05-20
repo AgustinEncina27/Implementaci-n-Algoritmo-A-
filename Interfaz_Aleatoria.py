@@ -6,6 +6,9 @@ class Aleatoria(tk.Frame):
     
     def __init__(self, parent,controller): 
         super().__init__(parent)
+        controller.limpiarTodo()
+        controller.LimpiarArbol()
+       
         ancho_ventana = 500
         alto_ventana = 500
         x_ventana = parent.winfo_screenwidth() // 2 - ancho_ventana // 2

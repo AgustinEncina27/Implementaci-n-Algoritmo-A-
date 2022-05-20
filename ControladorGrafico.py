@@ -29,6 +29,12 @@ class Controller:
     #Elimina los nodos y relaciones del grafo
     def LimpiarGrafo(self): 
         self.a.LimpiarGrafo()
+    
+    def limpiarTodo(self):
+        self.a.limpiarTodo()   
+    
+    def LimpiarArbol(self): 
+        limpiarArbol()
 
     #Crea el grafico con los nodos y relaciones que almacena c
     def obtenerDatosGrafoCargar(self):
@@ -44,6 +50,15 @@ class Controller:
         b=final
         c=[a,b]
         self.a.CargaARegistro(c)
+
+    def iniciarSolucion(self):
+        iniciarAlgoritmo(self.a.getGrafo())
+    
+    def mostrarSolucionTotal(self):
+        return mostrarCamino()
+    
+    def mostrarTextoSolucion(self):
+        return mostrarTextoSolucion()
         
     
     

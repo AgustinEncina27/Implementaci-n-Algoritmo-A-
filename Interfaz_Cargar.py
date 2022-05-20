@@ -7,7 +7,8 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 class Cargar(tk.Frame):
     def __init__(self, parent,controller):
         super().__init__(parent)
-        controller.LimpiarGrafo()
+        controller.limpiarTodo()
+        controller.LimpiarArbol()
         ancho_ventana = 500
         alto_ventana = 600
         x_ventana = parent.winfo_screenwidth() // 2 - ancho_ventana // 2
@@ -58,16 +59,19 @@ class Cargar(tk.Frame):
         relaciones=self.relaciones.get()
         if(str(nodo1)=="" or str(nodo2)=="" or str(relaciones)==""):
             messagebox.showwarning("Advertencia","Ingrese los NODOS A RELACIONAR y el PESO por favor")
-        elif self.controller:
-            f=self.controller.CargarDatosGrafo(int(nodo1),int(nodo2),int(relaciones))
-            canvas = FigureCanvasTkAgg(f, self)
-            canvas.get_tk_widget().place(x=0,y=130)
-            
-            lbl3.place(x=5,y=500)
-            inicial.place(x=170,y=500)
-            lbl4.place(x=5,y=530)
-            final.place(x=170,y=530)
-            botonMostrar.place(x=200,y=560)
+        else:
+            if(int(nodo1)==int(nodo2)):
+                messagebox.showwarning("Advertencia","El NODO 1  y el NODO 2 tiene que ser diferentes")
+            elif self.controller:
+                f=self.controller.CargarDatosGrafo(int(nodo1),int(nodo2),int(relaciones))
+                canvas = FigureCanvasTkAgg(f, self)
+                canvas.get_tk_widget().place(x=0,y=130)
+                
+                lbl3.place(x=5,y=500)
+                inicial.place(x=170,y=500)
+                lbl4.place(x=5,y=530)
+                final.place(x=170,y=530)
+                botonMostrar.place(x=200,y=560)
     
     def MostrarSolucion(self,parent): 
         inicial=self.inicial.get()

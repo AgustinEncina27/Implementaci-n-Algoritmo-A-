@@ -36,10 +36,17 @@ class Grafo():
 		nx.draw_networkx_edge_labels(G,pos, edge_labels, font_size=6,ax=a)
 
 	def LimpiarGrafo(self):
+		print(self.G.nodes())
 		self.G.clear()
+		print(self.G.nodes())
 
 	def getGrafo(self):
 		return self.grafo
+	
+	def limpiarTodo(self):
+		self.grafo=[]
+		self.G.clear()
+		self.posG=dict()
 		
 	def CargaARegistro(self,c):
 		nodoInicial = c[0]
@@ -53,8 +60,6 @@ class Grafo():
 				listaNodosVecinosFinal.append(key)	
 		for j in self.G.nodes():
 			if(len(self.posG[j])!=0):
-				print('Nodo Inicial: ', nodoInicial)
-				print('Nodo Final: ',nodoFinal)
 				hDeNodoj = round(100*math.sqrt(((self.posG[j][0] - self.posG[nodoFinal][0])**2) + ((self.posG[j][1] - self.posG[nodoFinal][1])**2)))
 			else:
 				print('No existen relaciones en el nodo')
@@ -75,14 +80,12 @@ class Grafo():
 		#Creación aleatoria de aristas con Bernoulliy número aleatorios enteros para el peso de cada arista 
 		self.G.add_weighted_edges_from([(nodo1,nodo2,peso)])
 									
-		
-		
-		figure = Figure(figsize=(5,3.5), dpi=100)
-		a = figure.add_subplot(111)
-
 		#Llama a la funcion para establecer el formato del grafo
 		#Estilos de los nodos
 		self.posG = nx.random_layout(self.G)
+		figure = Figure(figsize=(5,3.5), dpi=100)
+		a = figure.add_subplot(111)
+
 		self.AtributosDeGrafo(self.G,self.posG,a)
 			
 		return figure
