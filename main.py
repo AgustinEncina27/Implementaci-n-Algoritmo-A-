@@ -8,7 +8,12 @@ if __name__ == '__main__':
     T = tk.Text(root, height = 20, width = 52) 
     while(seleccionarGrafo()):
         print('Ingrese una opcion correcta')
-    iniciarAlgoritmo()
+    IniciarVariablesPasoAPaso()
+    print('Seguir algoritmo: ')
+    bandera=1
+    while(int(input())==1 and bandera):
+        bandera = iniciarAlgortimoPasoAPaso()
+        print('Seguir algoritmo: ')
     T.pack()
     T.insert(tk.END, mostrarTextoSolucion())
     root.mainloop()
