@@ -76,7 +76,7 @@ def seleccionarGrafo():
                 if node1<node2 and bernoulli.rvs(p=p):
                     G.add_weighted_edges_from([(node1,node2,random.randint(0, 100))])
         pos = nx.random_layout(G,seed=7)
-
+        
         #Carga de los nodos en el grafo
         nodoInicial = randint(0,a)
         nodoFinal = randint(0,a-1)
@@ -87,8 +87,6 @@ def seleccionarGrafo():
             nodoFinal = randint(0,a-1)
             for key in G.neighbors(nodoFinal):
                 listaNodosVecinosFinal.append(key)
-        print('Nodo Inicial: ', nodoInicial)
-        print('Nodo Final: ',nodoFinal)
         for j in G.nodes():
             if(len(pos[j])!=0):
                 hDeNodoj = round(100*math.sqrt(((pos[j][0] - pos[nodoFinal][0])**2) + ((pos[j][1] - pos[nodoFinal][1])**2)))

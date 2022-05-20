@@ -7,10 +7,10 @@ class Nodo:
         self.f = float('inf') #Sumatoria
         self.posX = 0
         self.posY = 0 #Dos valores que nos indicaran la posicion del nodo en la grilla
-        self.inicial = inicial
+        self.inicial = inicial #Indican si se trata de un nodo Final o Inicial
         self.final = final
         self.nodosRelacionados = []
-        self.padre = None
+        self.padre = None #Padre del nodo en el arbol de solucion
         self.sucesores=[]
     
     def calcularF(self):
@@ -25,4 +25,8 @@ class Nodo:
         if(self.padre!=None):
             strNodo = strNodo + ' Padre:' + str(self.padre.id)
         return strNodo
+
+    def mostrarId(self):
+        strId = str(self.id)
+        return strId
     

@@ -3,6 +3,7 @@ from tkinter import ttk
 from ControladorGrafico import *
 from Interfaz_Mostrar_Grafo import *
 from Interfaz_Cargar import *
+from Interfaz_Aleatoria import *
 from Interfaz_Mostrar_Solucion import *
 from Interfaz_principal import Principal
 
@@ -53,7 +54,7 @@ class App(tk.Tk):
     
     def mostrarFrameCargar(self):
         self.view.pack_forget()
-        self.view = Cargar(self)
+        self.view = Cargar(self,self.controller)
         self.view.set_controller(self.controller)
     
     def mostrarFrameMostrar_Grafo(self):
