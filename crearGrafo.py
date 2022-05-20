@@ -19,6 +19,9 @@ def cargarGrafo(listaNodos):
     for nodosACargar in listaNodos:
         grafo.append(nodosACargar)
 
+def getGrafo():
+    return grafo
+
 def seleccionarGrafo():
     bandera=1
     print('Ingrese el ejercicio a resolver: ')
