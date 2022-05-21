@@ -46,7 +46,6 @@ class Cargar(tk.Frame):
         
         #Botones
         botonCreacion=Button(text="CREAR RELACIÓN",command=lambda:self.CargarGrafo(lbl3,self.inicial,lbl4,self.final,botonMostrar)).place(x=330,y=70)
-
         botonMostrar=Button(text="MOSTRAR SOLUCIÓN",command=lambda:self.MostrarSolucion(parent))
 
         

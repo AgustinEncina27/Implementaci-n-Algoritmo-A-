@@ -1,16 +1,9 @@
-from turtle import clear
-from numpy import insert
-from crearGrafo import *
 from nodo import *
 import copy
 import networkx as nx
-import random
-import matplotlib.pyplot as plt
-import networkx as nx
-from networkx.drawing.nx_agraph import write_dot, graphviz_layout
-import matplotlib.pyplot as plt
+from networkx.drawing.nx_agraph import graphviz_layout
 from matplotlib.figure import Figure
-import tkinter as tk
+
 
 listaAbiertos=[]
 listaCerrados=[]
@@ -19,17 +12,8 @@ color_map = []
 Arbol=nx.Graph()
 listaNodosArbol=[]
 nodoInicial = None
-
-
-def elminarCamino(nodoAuxCerrados):
-    if(nodoAuxCerrados.sucesores and (not nodoAuxCerrados in listaAbiertos)):
-        for nodosVecinos in nodoAuxCerrados.sucesores:
-            if(nodosVecinos[0] in listaAbiertos and nodosVecinos[0].padre==nodoAuxCerrados):
-                elminarCamino(nodosVecinos[0])
-                listaAbiertos.remove(nodosVecinos[0])
-            if(nodosVecinos[0] in listaCerrados and nodosVecinos[0].padre==nodoAuxCerrados):
-                elminarCamino(nodosVecinos[0])
-                listaCerrados.remove(nodosVecinos[0])
+banderaFinal = 1
+contador=0
 
 def limpiarArbol():
     global listaAbiertos
@@ -46,6 +30,20 @@ def limpiarArbol():
     listaNodosArbol=[]
     global nodoInicial
     nodoInicial = None
+    global banderaFinal
+    banderaFinal = 1
+    global contador
+    contador=0
+
+def elminarCamino(nodoAuxCerrados):
+    if(nodoAuxCerrados.sucesores and (not nodoAuxCerrados in listaAbiertos)):
+        for nodosVecinos in nodoAuxCerrados.sucesores:
+            if(nodosVecinos[0] in listaAbiertos and nodosVecinos[0].padre==nodoAuxCerrados):
+                elminarCamino(nodosVecinos[0])
+                listaAbiertos.remove(nodosVecinos[0])
+            if(nodosVecinos[0] in listaCerrados and nodosVecinos[0].padre==nodoAuxCerrados):
+                elminarCamino(nodosVecinos[0])
+                listaCerrados.remove(nodosVecinos[0])
 
 
 #Funcion para recostruir el camino optimo encontrado por el algoritmo
@@ -53,14 +51,17 @@ def encontrarCamino(nodoFinal):
     caminoFinal=[]
     caminoFinal.append(nodoFinal)
     nodoRecorrer = nodoFinal.padre #A partir del nodo final, crea una lista con los padres
+    global TextoVentana
+    stringFinal = ''
     while(not nodoRecorrer.inicial): #de cada uno de los nodos que se encuentran en el camino del mismo
         caminoFinal.append(nodoRecorrer)
         nodoRecorrer = nodoRecorrer.padre
     if(nodoRecorrer.inicial): #hasta el nodo final
         caminoFinal.append(nodoRecorrer)
-    print('El camino final generado es: ')
-    for mostrarCamino in caminoFinal:
-        print(mostrarCamino.mostrarId())
+    TextoVentana = TextoVentana + 'El camino final generado es: \n'
+    for mostrarCamino in reversed(caminoFinal):
+        stringFinal =stringFinal + ' -> ' +mostrarCamino.mostrarId() 
+    TextoVentana = TextoVentana + stringFinal + '\n'
     return 0
 
 
@@ -124,37 +125,30 @@ def mostrarCamino():
                 color_map.pop(list(Arbol.nodes()).index(nodoEnElArbol))
             color_map.insert(list(Arbol.nodes()).index(nodoEnElArbol),'red')
     print(color_map)
-    figure = Figure(figsize=(5,5), dpi=100)
+    figure = Figure(figsize=(5,4), dpi=100)
     a = figure.add_subplot(111)
     pos =graphviz_layout(Arbol, prog='dot')
     #nx.draw_networkx_nodes(Arbol, pos, node_size=2)
-    nx.draw_networkx_labels(Arbol, pos, font_size=10,ax=a)
-    nx.draw(Arbol, pos, arrows=True,node_color=color_map,ax=a)
+    nx.draw_networkx_labels(Arbol, pos, font_size=10, ax=a)
+    nx.draw(Arbol, pos, arrows=True,node_color=color_map, ax=a)
     return figure
 
 #Funcion para encontrar el mejor nodo de la Lista Abierta, es decir, el de mejor F.
 def encontrarMejorNodo():
-    print('\nHola')
     nodoAuxiliar = listaAbiertos[0]
     for nodoRecorrer in listaAbiertos:
         if(nodoRecorrer.f<nodoAuxiliar.f):
             nodoAuxiliar = nodoRecorrer
-    print(str(nodoAuxiliar.id))
     return nodoAuxiliar
 
 def iniciarAlgoritmo(grafo):
     global listaAbiertos
+    global nodoInicial
     global listaCerrados
     global TextoVentana
-    for nodo in grafo: #Se busca el nodo inicial de la Lista
-        if(nodo.inicial==True):
-            nodoInicial=nodo
-    ultimoNodo = grafo[len(grafo)-1].id
-    nodoInicial.g=0
-    nodoInicial.f=nodoInicial.h+nodoInicial.g
-    listaAbiertos.append(nodoInicial) #Se calculan los valores y se lo agrega a la Lista Abierta
+    global contador
     banderaFinal = 1
-    contador=0
+    ultimoNodo=0
     while(len(listaAbiertos)!=0 and banderaFinal):
         mejorNodo = encontrarMejorNodo() #Se busca el nodo con mejor F en cada iteracion
         nodoAEliminar=0
@@ -191,12 +185,75 @@ def iniciarAlgoritmo(grafo):
             print(elementosCerrados.mostrarNodo())
         print('++++++++++')
     
-    if(banderaFinal): #Se imprime el siguiente mensaje en caso de no encontrar el camino hasta el nodo final
-        print("No se ha encontrado una solucion")
+    return(banderaFinal)
 
 def mostrarTextoSolucion():
     global TextoVentana
     return TextoVentana
+
+def IniciarVariablesPasoAPaso(grafo):
+    global nodoInicial
+    global contador
+    global TextoVentana
+    for nodo in grafo: #Se busca el nodo inicial de la Lista
+        if(nodo.inicial==True):
+            nodoInicial=nodo
+    nodoInicial.g=0
+    nodoInicial.f=nodoInicial.h+nodoInicial.g
+    listaAbiertos.append(nodoInicial)
+    contador=0
+    TextoVentana = TextoVentana + 'Nodo Inicial: ' + str(nodoInicial.id) + '\n'
+    for nodo in grafo: #Se busca el nodo final de la Lista solo para mostrarlo en pantalla
+        if(nodo.final==True):
+            nodoFinal=nodo
+    TextoVentana = TextoVentana + 'Nodo Final: ' + str(nodoFinal.id) + '\n'
+
+
+def iniciarAlgortimoPasoAPaso(grafo):
+    global listaAbiertos
+    global listaCerrados
+    global TextoVentana
+    global banderaFinal
+    global nodoInicial
+    global contador
+    banderaFinal = 1
+    if(len(listaAbiertos)!=0 and banderaFinal):
+        mejorNodo = encontrarMejorNodo() #Se busca el nodo con mejor F en cada iteracion
+        nodoAEliminar=0
+        while(nodoAEliminar<len(listaAbiertos)): #Se lo elimina de la Lista Abierta
+            nodoAbiertoAuxiliar = listaAbiertos[nodoAEliminar]
+            if(nodoAbiertoAuxiliar.id == mejorNodo.id):
+                listaAbiertos.pop(nodoAEliminar)
+            nodoAEliminar=nodoAEliminar+1
+        listaCerrados.append(mejorNodo) #Se lo agrega a la Lista Cerrada
+        if(mejorNodo.inicial):
+            color_map.insert(0,'red')
+        if(mejorNodo.final==True): #Si se llego al nodo final se reconstruye el camino
+            banderaFinal = encontrarCamino(mejorNodo)
+        else: #Si no se llego al nodo final se buscan los sucesores del Mejor Nodo
+            listaGenerarSucesores = generarSucesores(mejorNodo,grafo)
+            grafo = listaGenerarSucesores[1]
+        contador=contador+1
+        TextoVentana = TextoVentana + 'Iteracion numero: ' + str(contador) + '\n'
+        TextoVentana = TextoVentana + 'Lista Abierta: \n'
+        for elementos in listaAbiertos:
+            TextoVentana = TextoVentana + elementos.mostrarNodo() + '\n'
+        TextoVentana = TextoVentana + 'Lista Cerrada: \n'
+        for elementosCerrados in listaCerrados:
+            TextoVentana = TextoVentana + elementosCerrados.mostrarNodo() + '\n'
+        TextoVentana = TextoVentana + '------------------------------------------ \n\n'
+        print('////////////')
+        for elementos in listaAbiertos:
+            print(elementos.mostrarNodo())
+        print('////////////')
+        print('++++++++++')
+        for elementosCerrados in listaCerrados:
+            print(elementosCerrados.mostrarNodo())
+        print('++++++++++')
+    if(len(listaAbiertos)==0 and banderaFinal!=0):
+        banderaFinal=2
+    
+    return banderaFinal
 
 
 

@@ -36,9 +36,7 @@ class Grafo():
 		nx.draw_networkx_edge_labels(G,pos, edge_labels, font_size=6,ax=a)
 
 	def LimpiarGrafo(self):
-		print(self.G.nodes())
 		self.G.clear()
-		print(self.G.nodes())
 
 	def getGrafo(self):
 		return self.grafo

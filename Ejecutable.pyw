@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 from ControladorGrafico import *
 from Interfaz_Mostrar_Grafo import *
 from Interfaz_Cargar import *

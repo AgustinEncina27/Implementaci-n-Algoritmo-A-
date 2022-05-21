@@ -1,4 +1,3 @@
-from crearGrafo import *
 from Grafica_Grafo import Grafo
 from algoritmo_A import *
 
@@ -51,14 +50,22 @@ class Controller:
         c=[a,b]
         self.a.CargaARegistro(c)
 
-    def iniciarSolucion(self):
-        iniciarAlgoritmo(self.a.getGrafo())
+    def iniciarSolucionTotal(self):
+        return iniciarAlgoritmo(self.a.getGrafo())
+    
+    def iniciarSolucionParcial(self):
+        return iniciarAlgortimoPasoAPaso(self.a.getGrafo())
     
     def mostrarSolucionTotal(self):
         return mostrarCamino()
     
     def mostrarTextoSolucion(self):
         return mostrarTextoSolucion()
+    
+    def cargarDatosIniciales(self):
+        return IniciarVariablesPasoAPaso(self.a.getGrafo())
+    
+    
         
     
     

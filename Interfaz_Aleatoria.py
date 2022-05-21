@@ -43,15 +43,21 @@ class Aleatoria(tk.Frame):
         if(a=="" or h==""):
             messagebox.showwarning("Advertencia","Ingrese la cantidad de nodos y relaciones por favor")
         else:
-            z=int(a)
-            x=int(h)
-            b=0
-            for c in range(z+1):
-                acum=c
-                if(c!=0): 
-                    b+=acum-1 
-            if(x>b):
-                messagebox.showwarning("Advertencia","Por favor ingrese el rango permitido[1,"+str(b)+"]")
-            elif self.controller:
-                self.controller.CargarDatosGrafoAzar(z,x)
-                parent.mostrarFrameMostrar_Grafo()
+            if (int(h)<int(a)):
+                messagebox.showwarning("Advertencia","La cantidad de relaciones tienen que ser igual o mayor a la cantidad de nodos")
+            else:
+                if(int(h)==0 or int(a)==0):
+                    messagebox.showwarning("Advertencia","La cantidad de nodos o relaciones no pueden ser nulos")
+                else:
+                    z=int(a)
+                    x=int(h)
+                    b=0
+                    for c in range(z+1):
+                        acum=c
+                        if(c!=0): 
+                            b+=acum-1 
+                    if(x>b):
+                        messagebox.showwarning("Advertencia","Por favor ingrese el rango permitido[1,"+str(b)+"]")
+                    elif self.controller:
+                        self.controller.CargarDatosGrafoAzar(z,x)
+                        parent.mostrarFrameMostrar_Grafo()
