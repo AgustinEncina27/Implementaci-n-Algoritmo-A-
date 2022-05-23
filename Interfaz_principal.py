@@ -2,7 +2,7 @@ from tkinter import *
 import tkinter as tk
 
 class Principal(tk.Frame):
-    
+    #Constructor de Principal
     def __init__(self, parent):
         
         super().__init__(parent)
@@ -20,6 +20,7 @@ class Principal(tk.Frame):
         #Label
         lbl1=Label(text="BIENVENIDO",font=("Comic Sans MS",28)).place(x=130,y=200)
 
+    #Obtiene el controlador
     def set_controller(self, controller):
         self.controller = controller
 

@@ -1,13 +1,11 @@
 from tkinter import *
 from tkinter import messagebox
 import tkinter as tk
-from pandas import DataFrame
-import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 
 class Mostrar_Solucion(tk.Frame):
-    
+    #Constructor de Mostrar_Solución
     def __init__(self, parent,controller):
         super().__init__(parent)
         ancho_ventana = 800
@@ -38,10 +36,11 @@ class Mostrar_Solucion(tk.Frame):
         canvas.draw()
         canvas.get_tk_widget().place(x=0,y=0)
        
-    
+    #Obtiene el controlador
     def set_controller(self, controller):
         self.controller = controller
     
+    #Muestra el arbol con la solucion final, el texto con todas las iteraciones y los valores que se encuentran en las listas ABIERTA Y CERRADA
     def mostrarSolucionTotal(self,controller):
         z=controller.iniciarSolucionTotal()
         if(z==0):
@@ -60,10 +59,8 @@ class Mostrar_Solucion(tk.Frame):
                 self.botonSiguiente.place_forget()
                 self.botonSolucionFinal.place_forget()
                 messagebox.showwarning("Advertencia","No se encontró la solución")
-        
-        
 
-
+    #Muestra el arbol que se genera paso a paso, con los valores que se encuentran en las listas ABIERTA Y CERRADA
     def mostrarSolucionParcial(self,controller):
         z=controller.iniciarSolucionParcial()
         if(z==0):

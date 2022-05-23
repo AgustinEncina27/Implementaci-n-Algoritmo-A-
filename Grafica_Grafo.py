@@ -6,7 +6,6 @@ import networkx as nx
 from matplotlib.figure import Figure
 import matplotlib
 matplotlib.use('TkAgg')
-import matplotlib.pyplot as plt
 #Paquete para números enteros random
 import random
 import math
@@ -15,6 +14,7 @@ from nodo import Nodo
 #from ControladorGrafico import controller
 
 class Grafo():
+	#Constructor de Grafo
 	def __init__(self):
 		self.G = nx.Graph()
 		self.grafo=[]
@@ -34,18 +34,22 @@ class Grafo():
 		#Agrega el peso a las aristas
 		edge_labels = nx.get_edge_attributes(G, "weight")
 		nx.draw_networkx_edge_labels(G,pos, edge_labels, font_size=6,ax=a)
-
+	
+	#Elimina todo lo que obtiene el grafo
 	def LimpiarGrafo(self):
 		self.G.clear()
 
+	#Retorna los registros cargados del grafo
 	def getGrafo(self):
 		return self.grafo
 	
+	#Inicializa todas las variables de nuevo
 	def limpiarTodo(self):
 		self.grafo=[]
 		self.G.clear()
 		self.posG=dict()
-		
+
+	#Carga en registros toda la infromacion del grafo creado	
 	def CargaARegistro(self,c):
 		nodoInicial = c[0]
 		nodoFinal = c[1]
@@ -74,6 +78,7 @@ class Grafo():
 					if(nodoRelacionado.id == key):
 						t.nodosRelacionados.append([nodoRelacionado,listaNodosRelacionados[key]['weight']])
 		
+	#Crea el grafo con los parametros que le pasa
 	def CargarGrafo(self,nodo1,nodo2,peso):
 		#Creación aleatoria de aristas con Bernoulliy número aleatorios enteros para el peso de cada arista 
 		self.G.add_weighted_edges_from([(nodo1,nodo2,peso)])
@@ -124,60 +129,6 @@ class Grafo():
 
 
 
-
-
-
-
-#j=[0, 1, 2]
-	#j.append(4)
-	#H = G.subgraph(j)
-	#posi=hierarchy_pos(H,1)
-	#Llama a la funcion para establecer el formato del grafo
-	#AtributosDeGrafo(H,posi,a)
-
-	#nx.draw(H, pos=posi)
-	#Muestra el grafo
-	#plt.show()
-
-	#plt.savefig("Graph.png", format="PNG")
-#muestra las coordenadas del nodo 0 
-#Resultado [0.07630829 0.7799188 ] .Retorna un dict
-#print(pos[0])
-#print(pos[1])
-#print(pos[2])
-
-#Muestra todo los nodos del grafico
-#Resultado[0, 1, 2]. Retorna un dict
-#print(G.nodes())
-
-#Muestra todo los nodos del grafico
-#Resultado[0, 1, 2].Retorna una lista 
-#print(list(G.nodes))
-
-#Muestra Todos los hijos
-#Resultado Vecinos de 1:  4. Retorna un iterador
-#for n in G.neighbors(0):
-#	print ("Vecinos de 1: ", n)
-
-#muestra las relaciones que tiene y el peso de cada relacion
-#Resultado {1: {'weight': 35}}.Retorna el tipo de dato  dict
-#print (G.__getitem__(0))
-
-#Para obtener el peso de la relación
-#Resultado Peso de la relacion entre 0 y 1:  {'weight': 35}
-#print ("Peso de la relacion entre 0 y 1: ", G[0][1])
-
-#Para gráficar los pasos del Algoritmo A*
-#Si queres agregar mas pasos tenes que agregarlos a la lista
-#a=[0, 1, 2]
-#a.append(4)
-#H = G.subgraph(a)
-
-#Llama a la funcion para establecer el formato del grafo
-#AtributosDeGrafo(H,pos)
-
-#Muestra el grafo
-#plt.show()
 
 
 

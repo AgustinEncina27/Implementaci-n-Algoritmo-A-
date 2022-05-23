@@ -1,5 +1,5 @@
 class Nodo:
-    
+    #Constructor de Nodo
     def __init__(self, numeroId, h, inicial=False, final=False):
         self.id = numeroId #Numero para identificar el nodo
         self.g = float('inf') #Diccionario con los arcos a otros nodos
@@ -13,12 +13,14 @@ class Nodo:
         self.padre = None #Padre del nodo en el arbol de solucion
         self.sucesores=[]
     
+    #Calcula la heuristica
     def calcularF(self):
         self.f = self.g + self.h
 
     def calcularDistanciaAlNodoFinal(self):
         pass
-
+    
+    #Muestra solo el id del nodo, la función g, la función f y la función h
     def mostrarNodo(self):
         strNodo =''
         strNodo = strNodo + 'ID:' + str(self.id) + ' G:' + str(self.g) + ' F:' + str(self.f) + ' H:' + str(self.h)
@@ -26,6 +28,7 @@ class Nodo:
             strNodo = strNodo + ' Padre:' + str(self.padre.id)
         return strNodo
 
+    #Muestra solo el id del nodo
     def mostrarId(self):
         strId = str(self.id)
         return strId

@@ -3,6 +3,7 @@ from algoritmo_A import *
 
 class Controller:
     c=[]
+    #Constructor del controlador
     def __init__(self, principal, view):
         self.a=Grafo()
         self.view = view
@@ -12,9 +13,11 @@ class Controller:
     def CargarDatosGrafo(self,nodo1,nodo2,relaciones):
         return self.a.CargarGrafo(nodo1,nodo2,relaciones)
 
+    #Inicializa la solución
     def IniciarSolucion(self):
         iniciarAlgoritmo(self.a.getGrafo())  
     
+    #Retorna la figura para mostrarla en la ventana
     def FiguraSolucion():
         f=mostrarCamino()
         return f
@@ -29,9 +32,11 @@ class Controller:
     def LimpiarGrafo(self): 
         self.a.LimpiarGrafo()
     
+    #Inicializa las variables de Grafica_Grafo
     def limpiarTodo(self):
         self.a.limpiarTodo()   
     
+    #Inicializa el arbol de solución de algoritmo_A
     def LimpiarArbol(self): 
         limpiarArbol()
 
@@ -50,18 +55,23 @@ class Controller:
         c=[a,b]
         self.a.CargaARegistro(c)
 
+    #Inicializa la solución Total
     def iniciarSolucionTotal(self):
         return iniciarAlgoritmo(self.a.getGrafo())
     
+    #Inicializa la solución Parcial
     def iniciarSolucionParcial(self):
         return iniciarAlgortimoPasoAPaso(self.a.getGrafo())
     
+    #Nos retorna la figura del grafo de solucion final o parcial
     def mostrarSolucionTotal(self):
         return mostrarCamino()
     
+    #Nos muestra la informacion de cada iteración
     def mostrarTextoSolucion(self):
         return mostrarTextoSolucion()
     
+    #Iniciliza la solucion de forma parcial
     def cargarDatosIniciales(self):
         return IniciarVariablesPasoAPaso(self.a.getGrafo())
     

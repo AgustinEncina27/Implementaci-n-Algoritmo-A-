@@ -1,12 +1,11 @@
 from tkinter import *
 from tkinter import messagebox
 import tkinter as tk
-import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 
 class Mostrar_Grafo(tk.Frame):
-    
+    #Constructor de Mostrar_Grafo
     def __init__(self, parent,controller):
         super().__init__(parent)
         controller.LimpiarGrafo()
@@ -39,20 +38,24 @@ class Mostrar_Grafo(tk.Frame):
         canvas.draw()
         canvas.get_tk_widget().pack(anchor=N)
        
-    
+    #Obtiene el controlador
     def set_controller(self, controller):
         self.controller = controller
     
+    #Carga los nodos iniciales y finales para luego utilizarlos para mostrar la solución
     def generarGrafo(self,parent):
         inicial=self.nodos.get()
         final=self.relaciones.get()
-        if(inicial=="" or final==""):
-            messagebox.showwarning("Advertencia","Ingrese el NODO INICIAL y el NODO FINAL por favor")
+        if(not(inicial.isdecimal()) or not(final.isdecimal())):
+            messagebox.showwarning("Advertencia","Por favor ingresar solo números enteros")
         else:
-            if(int(inicial)==int(final)):
-                messagebox.showwarning("Advertencia","Por favor Ingresar NODO INICIAL y NODO FINAL diferentes")
-            elif self.controller:
-                self.controller.CargarElGrafoEnRegistros(int(inicial),int(final))
-                parent.mostrarFrameMostrar_Solucion()
+            if(inicial=="" or final==""):
+                messagebox.showwarning("Advertencia","Ingrese el NODO INICIAL y el NODO FINAL por favor")
+            else:
+                if(int(inicial)==int(final)):
+                    messagebox.showwarning("Advertencia","Por favor Ingresar NODO INICIAL y NODO FINAL diferentes")
+                elif self.controller:
+                    self.controller.CargarElGrafoEnRegistros(int(inicial),int(final))
+                    parent.mostrarFrameMostrar_Solucion()
         
             

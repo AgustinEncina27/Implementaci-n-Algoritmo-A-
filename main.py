@@ -7,6 +7,7 @@ from Interfaz_Mostrar_Solucion import *
 from Interfaz_principal import Principal
 
 class App(tk.Tk):
+    #Constructor del la App
     def __init__(self):
         super().__init__()
 
@@ -21,8 +22,6 @@ class App(tk.Tk):
 
         # create a view and place it on the root window
         self.view = Principal(self)
-
-        #view.grid(row=0, column=0, padx=10, pady=10)
 
         # create a controller
         self.controller = Controller(self, self.view)
@@ -41,31 +40,37 @@ class App(tk.Tk):
         # set the controller to view
         self.view.set_controller(self.controller)
     
+    #Muestra la interfaz_aleatoria
     def mostrarFrameAleatorio(self):
         self.view.pack_forget()
         self.view = Aleatoria(self,self.controller)
         self.view.set_controller(self.controller)
     
+    #Muestra la Interfaz_principal
     def mostrarFramePrincipal(self):
         self.view.pack_forget()
         self.view = Principal(self)
         self.view.set_controller(self.controller)
     
+    #Muestra la Interfaz_Carga
     def mostrarFrameCargar(self):
         self.view.pack_forget()
         self.view = Cargar(self,self.controller)
         self.view.set_controller(self.controller)
     
+    #Muestra la Interfaz_Mostrar_Grafo
     def mostrarFrameMostrar_Grafo(self):
         self.view.pack_forget()
         self.view = Mostrar_Grafo(self,self.controller)
         self.view.set_controller(self.controller)
     
+    #Muestra la Interfaz_Mostrar_Solución
     def mostrarFrameMostrar_Solucion(self):
         self.view.pack_forget()
         self.view = Mostrar_Solucion(self,self.controller)
         self.view.set_controller(self.controller)
 
+#Inicializa  la ventana
 if __name__ == '__main__':
     app = App()
     app.mainloop()

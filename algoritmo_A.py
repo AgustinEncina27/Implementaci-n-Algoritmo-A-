@@ -15,6 +15,7 @@ nodoInicial = None
 banderaFinal = 1
 contador=0
 
+#Inicializa las variables
 def limpiarArbol():
     global listaAbiertos
     listaAbiertos=[]
@@ -35,6 +36,7 @@ def limpiarArbol():
     global contador
     contador=0
 
+#Elimina el camino que no es optimo
 def elminarCamino(nodoAuxCerrados):
     if(nodoAuxCerrados.sucesores and (not nodoAuxCerrados in listaAbiertos)):
         for nodosVecinos in nodoAuxCerrados.sucesores:
@@ -111,6 +113,10 @@ def generarSucesores(nodo, grafo):
             listaNodosArbol.append([nodo.id,sucesor.id])
     return [banderaNodoRepetido,grafo]
 
+#Si se ejecuta para mostrar el total del arbol con la solucion. 
+#Muestra el arbol con los nodos de color rojo si se encuentran en la lista de CERRADOS o verde si esta en la lista de ABIERTOS
+#Si se ejecuta para mostrar la solucion parcial.
+#Muestra el arbol de el paso actual con los nodos de color rojo si se encuentran en la lista de CERRADOS o verde si esta en la lista de ABIERTOS
 def mostrarCamino():
     print (listaNodosArbol)
     global Arbol
@@ -133,7 +139,7 @@ def mostrarCamino():
     nx.draw(Arbol, pos, arrows=True,node_color=color_map, ax=a)
     return figure
 
-#Funcion para encontrar el mejor nodo de la Lista Abierta, es decir, el de mejor F.
+#Función para encontrar el mejor nodo de la Lista Abierta, es decir, el de mejor F.
 def encontrarMejorNodo():
     nodoAuxiliar = listaAbiertos[0]
     for nodoRecorrer in listaAbiertos:
@@ -141,6 +147,7 @@ def encontrarMejorNodo():
             nodoAuxiliar = nodoRecorrer
     return nodoAuxiliar
 
+#Inicia el algoritmo A* para la solucion total
 def iniciarAlgoritmo(grafo):
     global listaAbiertos
     global nodoInicial
@@ -187,10 +194,12 @@ def iniciarAlgoritmo(grafo):
     
     return(banderaFinal)
 
+#Devuelve el texto con la información de cada iteracion, nodo inicial, final y solucion.Si es que la hay
 def mostrarTextoSolucion():
     global TextoVentana
     return TextoVentana
 
+#Carga los datos para incializar el Algoritmo A*
 def IniciarVariablesPasoAPaso(grafo):
     global nodoInicial
     global contador
@@ -208,7 +217,7 @@ def IniciarVariablesPasoAPaso(grafo):
             nodoFinal=nodo
     TextoVentana = TextoVentana + 'Nodo Final: ' + str(nodoFinal.id) + '\n'
 
-
+#Inicia el algoritmo A* para la solucion parcial
 def iniciarAlgortimoPasoAPaso(grafo):
     global listaAbiertos
     global listaCerrados

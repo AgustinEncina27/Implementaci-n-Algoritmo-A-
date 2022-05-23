@@ -3,7 +3,7 @@ from tkinter import messagebox
 import tkinter as tk
 
 class Aleatoria(tk.Frame):   
-    
+    #Constructor Aleatoria
     def __init__(self, parent,controller): 
         super().__init__(parent)
         controller.limpiarTodo()
@@ -33,31 +33,36 @@ class Aleatoria(tk.Frame):
 
         #Boton
         botonCreacion=Button(text="CREAR GRAFO",command=lambda:self.CargarGrafo(parent)).place(x=200,y=250)
-        
+    
+    #Obtiene el controlador 
     def set_controller(self, controller):
         self.controller = controller
     
+    #Crea el grafo con los datos ingresados(nodos y relaciones)
     def CargarGrafo(self,parent):
         a= self.nodos.get()
         h=self.relaciones.get()
-        if(a=="" or h==""):
-            messagebox.showwarning("Advertencia","Ingrese la cantidad de nodos y relaciones por favor")
+        if(not(a.isdecimal()) or not(h.isdecimal())):
+            messagebox.showwarning("Advertencia","Por favor ingresar solo números enteros")
         else:
-            if (int(h)<int(a)):
-                messagebox.showwarning("Advertencia","La cantidad de relaciones tienen que ser igual o mayor a la cantidad de nodos")
+            if(a=="" or h==""):
+                messagebox.showwarning("Advertencia","Ingrese la cantidad de nodos y relaciones por favor")
             else:
-                if(int(h)==0 or int(a)==0):
-                    messagebox.showwarning("Advertencia","La cantidad de nodos o relaciones no pueden ser nulos")
+                if (int(h)<int(a)):
+                    messagebox.showwarning("Advertencia","La cantidad de relaciones tienen que ser igual o mayor a la cantidad de nodos")
                 else:
-                    z=int(a)
-                    x=int(h)
-                    b=0
-                    for c in range(z+1):
-                        acum=c
-                        if(c!=0): 
-                            b+=acum-1 
-                    if(x>b):
-                        messagebox.showwarning("Advertencia","Por favor ingrese el rango permitido[1,"+str(b)+"]")
-                    elif self.controller:
-                        self.controller.CargarDatosGrafoAzar(z,x)
-                        parent.mostrarFrameMostrar_Grafo()
+                    if(int(h)==0 or int(a)==0):
+                        messagebox.showwarning("Advertencia","La cantidad de nodos o relaciones no pueden ser nulos")
+                    else:
+                        z=int(a)
+                        x=int(h)
+                        b=0
+                        for c in range(z+1):
+                            acum=c
+                            if(c!=0): 
+                                b+=acum-1 
+                        if(x>b):
+                            messagebox.showwarning("Advertencia","Por favor ingrese el rango permitido[0,"+str(b)+"]")
+                        elif self.controller:
+                            self.controller.CargarDatosGrafoAzar(z,x)
+                            parent.mostrarFrameMostrar_Grafo()
