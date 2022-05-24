@@ -2,10 +2,11 @@ from Grafica_Grafo import Grafo
 from algoritmo_A import *
 
 class Controller:
-    c=[]
     #Constructor del controlador
     def __init__(self, principal, view):
+        self.c=[]
         self.a=Grafo()
+        self.algoritmo=Algoritmo_A()
         self.view = view
         self.principal = principal
     
@@ -15,11 +16,11 @@ class Controller:
 
     #Inicializa la solución
     def IniciarSolucion(self):
-        iniciarAlgoritmo(self.a.getGrafo())  
+        self.algoritmo.iniciarAlgoritmo(self.a.getGrafo())  
     
     #Retorna la figura para mostrarla en la ventana
-    def FiguraSolucion():
-        f=mostrarCamino()
+    def FiguraSolucion(self):
+        f= self.algoritmo.mostrarCamino()
         return f
 
     #Carga la cantidad de nodos y relaciones del grafo
@@ -38,42 +39,42 @@ class Controller:
     
     #Inicializa el arbol de solución de algoritmo_A
     def LimpiarArbol(self): 
-        limpiarArbol()
+         self.algoritmo.limpiarArbol()
 
     #Crea el grafico con los nodos y relaciones que almacena c
     def obtenerDatosGrafoCargar(self):
         return self.a.CrearGraficoCarga(self.c[0], self.c[1])
     
-    #Crea la solucion con el nodo inicial y final que tiene h
-    def obtenerInicialYFinal(self):
-        return self.h
-
     #Carga el grafo en las listas
     def CargarElGrafoEnRegistros(self,inicial,final):
         a=inicial
         b=final
-        c=[a,b]
-        self.a.CargaARegistro(c)
+        self.c=[a,b]
+        self.a.CargaARegistro(self.c)
 
     #Inicializa la solución Total
     def iniciarSolucionTotal(self):
-        return iniciarAlgoritmo(self.a.getGrafo())
+        return  self.algoritmo.iniciarAlgoritmo(self.a.getGrafo())
     
     #Inicializa la solución Parcial
     def iniciarSolucionParcial(self):
-        return iniciarAlgortimoPasoAPaso(self.a.getGrafo())
+        return  self.algoritmo.iniciarAlgortimoPasoAPaso(self.a.getGrafo())
     
     #Nos retorna la figura del grafo de solucion final o parcial
     def mostrarSolucionTotal(self):
-        return mostrarCamino()
+        return  self.algoritmo.mostrarCamino()
     
     #Nos muestra la informacion de cada iteración
     def mostrarTextoSolucion(self):
-        return mostrarTextoSolucion()
+        return  self.algoritmo.mostrarTextoSolucion()
     
     #Iniciliza la solucion de forma parcial
     def cargarDatosIniciales(self):
-        return IniciarVariablesPasoAPaso(self.a.getGrafo())
+        return  self.algoritmo.IniciarVariablesPasoAPaso(self.a.getGrafo())
+    
+    #Nos indica si el nodo existe en el arbol
+    def busquedaDeNodo(self,nodo):
+        return  self.a.busquedaDeNodo(nodo)
     
     
         

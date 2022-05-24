@@ -19,6 +19,10 @@ class Grafo():
 		self.G = nx.Graph()
 		self.grafo=[]
 		self.posG=dict()
+	
+	#Nos indica si el nodo existe en el arbol
+	def busquedaDeNodo(self,nodo):
+		return self.G.has_node(nodo)
 
 	#Establece el formato del grafo
 	def AtributosDeGrafo(self,G,pos,a):

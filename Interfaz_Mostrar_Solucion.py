@@ -67,6 +67,10 @@ class Mostrar_Solucion(tk.Frame):
             self.botonSiguiente.place_forget()
             self.botonSolucionFinal.place_forget()
             messagebox.showwarning("Advertencia","Se encontró la solución")
+            f=controller.mostrarSolucionTotal()
+            canvas = FigureCanvasTkAgg(f, self)
+            canvas.draw()
+            canvas.get_tk_widget().place(x=0,y=0)
         else:
             if(z==2):
                 messagebox.showwarning("Advertencia","No se encontró la solución")

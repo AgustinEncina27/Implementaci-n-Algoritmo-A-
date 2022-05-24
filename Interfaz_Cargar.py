@@ -45,7 +45,7 @@ class Cargar(tk.Frame):
         
         #Botones
         botonCreacion=Button(text="CREAR RELACIÓN",command=lambda:self.CargarGrafo(lbl3,self.inicial,lbl4,self.final,botonMostrar)).place(x=330,y=70)
-        botonMostrar=Button(text="MOSTRAR SOLUCIÓN",command=lambda:self.MostrarSolucion(parent))
+        botonMostrar=Button(text="MOSTRAR SOLUCIÓN",command=lambda:self.MostrarSolucion(parent,controller))
 
     #Obtiene el controlador 
     def set_controller(self, controller):
@@ -79,17 +79,23 @@ class Cargar(tk.Frame):
                     botonMostrar.place(x=200,y=560)
     
     #Muestra como va quedando el grafo cada vez que se agrega una relacion
-    def MostrarSolucion(self,parent): 
+    def MostrarSolucion(self,parent,controller): 
         inicial=self.inicial.get()
         final=self.final.get()
-        if(not(inicial.isdecimal()) or not(final.isdecimal())):
-            messagebox.showwarning("Advertencia","Por favor ingresar solo números enteros")
+        if(not(controller.busquedaDeNodo(int(inicial))) or not(controller.busquedaDeNodo(int(final)))):
+            messagebox.showwarning("Advertencia","El nodo inicial o final ingresados no se encuentran en el grafo")
         else:
-            if(inicial=="" or final==""):
-                messagebox.showwarning("Advertencia","Ingrese el NODO INICIAL y el NODO FINAL por favor")
-            elif self.controller:
-                self.controller.CargarElGrafoEnRegistros(int(inicial),int(final))
-                parent.mostrarFrameMostrar_Solucion()
+            if(not(inicial.isdecimal()) or not(final.isdecimal())):
+                messagebox.showwarning("Advertencia","Por favor ingresar solo números enteros")
+            else:
+                if(inicial=="" or final==""):
+                    messagebox.showwarning("Advertencia","Ingrese el NODO INICIAL y el NODO FINAL por favor")
+                else:
+                    if(int(inicial)==int(final)):
+                        messagebox.showwarning("Advertencia","Usted ya se encuentra en el nodo objetivo")
+                    elif self.controller:
+                        self.controller.CargarElGrafoEnRegistros(int(inicial),int(final))
+                        parent.mostrarFrameMostrar_Solucion()
 
                 
                 
