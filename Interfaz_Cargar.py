@@ -33,7 +33,7 @@ class Cargar(tk.Frame):
         self.nodo2=Entry()
         self.nodo2.place(x=170,y=70)
 
-        lbl2=Label(text="Ingresar PESO de la relación:")
+        lbl2=Label(text="Ingresar COSTO de la relación:")
         lbl2.place(x=5,y=100)
         self.relaciones=Entry()
         self.relaciones.place(x=170,y=100)

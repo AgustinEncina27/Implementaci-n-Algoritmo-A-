@@ -47,6 +47,17 @@ class Grafo():
 	def getGrafo(self):
 		return self.grafo
 	
+	#Retorna si existe la relacion entre esos nodos
+	#def neighbors(self, n):
+	#def __getitem__(self, n):
+	
+	def existeRelacion(self,a,b):
+		return self.G.has_edge(a,b)
+
+	#Si existe el nodo
+	def existeNodo(self,a):
+		return self.G.has_node(a)
+	
 	#Inicializa todas las variables de nuevo
 	def limpiarTodo(self):
 		self.grafo=[]

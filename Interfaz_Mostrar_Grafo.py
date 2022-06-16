@@ -46,19 +46,28 @@ class Mostrar_Grafo(tk.Frame):
     def generarGrafo(self,parent,controller):
         inicial=self.nodos.get()
         final=self.relaciones.get()
-        if(not(controller.busquedaDeNodo(int(inicial))) or not(controller.busquedaDeNodo(int(final)))):
-            messagebox.showwarning("Advertencia","El nodo inicial o final ingresados no se encuentran en el grafo")
+        if(not(controller.existeNodo(int(inicial)))):
+            messagebox.showwarning("Advertencia","El nodo inicial no existe en el grafo")
         else:
-            if(not(inicial.isdecimal()) or not(final.isdecimal())):
-                messagebox.showwarning("Advertencia","Por favor ingresar solo números enteros")
+            if(not(controller.existeNodo(int(final)))):
+                messagebox.showwarning("Advertencia","El nodo final no existe en el grafo")
             else:
-                if(inicial=="" or final==""):
-                    messagebox.showwarning("Advertencia","Ingrese el NODO INICIAL y el NODO FINAL por favor")
+                if(not(controller.existeRelacion(int(inicial),int(final)))):
+                    messagebox.showwarning("Advertencia","El nodo inicial y el nodo final no estan relacionados")
                 else:
-                    if(int(inicial)==int(final)):
-                        messagebox.showwarning("Advertencia","Usted ya se encuentra en el nodo objetivo")
-                    elif self.controller:
-                        self.controller.CargarElGrafoEnRegistros(int(inicial),int(final))
-                        parent.mostrarFrameMostrar_Solucion()
+                    if(not(controller.busquedaDeNodo(int(inicial))) or not(controller.busquedaDeNodo(int(final)))):
+                        messagebox.showwarning("Advertencia","El nodo inicial o final ingresados no se encuentran en el grafo")
+                    else:
+                        if(not(inicial.isdecimal()) or not(final.isdecimal())):
+                            messagebox.showwarning("Advertencia","Por favor ingresar solo números enteros")
+                        else:
+                            if(inicial=="" or final==""):
+                                messagebox.showwarning("Advertencia","Ingrese el NODO INICIAL y el NODO FINAL por favor")
+                            else:
+                                if(int(inicial)==int(final)):
+                                    messagebox.showwarning("Advertencia","Usted ya se encuentra en el nodo objetivo")
+                                elif self.controller:
+                                    self.controller.CargarElGrafoEnRegistros(int(inicial),int(final))
+                                    parent.mostrarFrameMostrar_Solucion()
         
             

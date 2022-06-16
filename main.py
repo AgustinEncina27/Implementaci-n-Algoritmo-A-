@@ -12,6 +12,7 @@ class App(tk.Tk):
         super().__init__()
 
         self.title('Implementación Algoritmo A estrella')
+
         ancho_ventana = 500
         alto_ventana = 500
         x_ventana = self.winfo_screenwidth() // 2 - ancho_ventana // 2
@@ -20,10 +21,10 @@ class App(tk.Tk):
         self.geometry(posicion)
         self.resizable(0,0)
 
-        # create a view and place it on the root window
+        #create a view and place it on the root window
         self.view = Principal(self)
 
-        # create a controller
+        #create a controller
         self.controller = Controller(self, self.view)
 
         #Menu
