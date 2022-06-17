@@ -1,7 +1,7 @@
 from nodo import *
 import copy
 import networkx as nx
-from networkx.drawing.nx_agraph import graphviz_layout
+import random
 from matplotlib.figure import Figure
 
 class Algoritmo_A():
@@ -120,10 +120,44 @@ class Algoritmo_A():
                 self.color_map.insert(list(self.Arbol.nodes()).index(nodoEnElArbol),'yellow')
         figure = Figure(figsize=(5,4), dpi=100)
         a = figure.add_subplot(111)
-        pos =graphviz_layout(self.Arbol, prog='dot')
+        #pos =graphviz_layout(self.Arbol, prog='dot')
+        pos= self.hierarchy_pos(self.Arbol,int(self.nodoInicial.mostrarId()))
         nx.draw_networkx_labels(self.Arbol, pos, font_size=10, ax=a)
         nx.draw(self.Arbol, pos, arrows=True,node_color=self.color_map, ax=a)
         return figure
+
+    #Retorna las posiciones del arbol
+    def hierarchy_pos(self,G, root=None, width=1., vert_gap = 0.2, vert_loc = 0, xcenter = 0.5):
+        G=self.Arbol
+        if not nx.is_tree(G):
+            raise TypeError('cannot use hierarchy_pos on a graph that is not a tree')
+
+        if root is None:
+            if isinstance(G, nx.DiGraph):
+                root = next(iter(nx.topological_sort(G)))  #allows back compatibility with nx version 1.11
+            else:
+                root = random.choice(list(G.nodes))
+
+        def _hierarchy_pos(G, root, width=1., vert_gap = 0.2, vert_loc = 0, xcenter = 0.5, pos = None, parent = None):
+            if pos is None:
+                pos = {root:(xcenter,vert_loc)}
+            else:
+                pos[root] = (xcenter, vert_loc)
+            children = list(G.neighbors(root))
+            if not isinstance(G, nx.DiGraph) and parent is not None:
+                children.remove(parent)  
+            if len(children)!=0:
+                dx = width/len(children) 
+                nextx = xcenter - width/2 - dx/2
+                for child in children:
+                    nextx += dx
+                    pos = _hierarchy_pos(G,child, width = dx, vert_gap = vert_gap, 
+                                        vert_loc = vert_loc-vert_gap, xcenter=nextx,
+                                        pos=pos, parent = root)
+            return pos
+        
+        return _hierarchy_pos(G, root, width, vert_gap, vert_loc, xcenter)
+    
 
     #Función para encontrar el mejor nodo de la Lista Abierta, es decir, el de mejor F.
     def encontrarMejorNodo(self):
