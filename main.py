@@ -1,4 +1,3 @@
-import tkinter as tk
 from ControladorGrafico import *
 from Interfaz_Mostrar_Grafo import *
 from Interfaz_Cargar import *
@@ -6,7 +5,7 @@ from Interfaz_Aleatoria import *
 from Interfaz_Mostrar_Solucion import *
 from Interfaz_principal import Principal
 
-class App(tk.Tk):
+class App(Tk):
     #Constructor del la App
     def __init__(self):
         super().__init__()

@@ -1,10 +1,9 @@
 from tkinter import *
 from tkinter import messagebox
-import tkinter as tk
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 
-class Mostrar_Grafo(tk.Frame):
+class Mostrar_Grafo(Frame):
     #Constructor de Mostrar_Grafo
     def __init__(self, parent,controller):
         super().__init__(parent)

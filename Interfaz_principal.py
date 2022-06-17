@@ -1,7 +1,6 @@
 from tkinter import *
-import tkinter as tk
 
-class Principal(tk.Frame):
+class Principal(Frame):
     #Constructor de Principal
     def __init__(self, parent):
         

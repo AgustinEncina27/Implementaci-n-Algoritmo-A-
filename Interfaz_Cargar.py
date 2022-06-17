@@ -1,9 +1,8 @@
 from tkinter import *
 from tkinter import messagebox
-import tkinter as tk
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
-class Cargar(tk.Frame):
+class Cargar(Frame):
     #Constructor de Cargar
     def __init__(self, parent,controller):
         super().__init__(parent)

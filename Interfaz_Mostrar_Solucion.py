@@ -1,11 +1,10 @@
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
-import tkinter as tk
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 
-class Mostrar_Solucion(tk.Frame):
+class Mostrar_Solucion(Frame):
     #Constructor de Mostrar_Solución
     def __init__(self, parent,controller):
         super().__init__(parent)
@@ -44,9 +43,9 @@ class Mostrar_Solucion(tk.Frame):
         #Muestra informaci+on sobre la solución
         controller.cargarDatosIniciales()
         controller.iniciarSolucionParcial()
-        T = tk.Text(self, height = 30, width = 36)
+        T = Text(self, height = 30, width = 36)
         T.place(x=950,y=0)
-        T.insert(tk.END, controller.mostrarTextoSolucion())
+        T.insert(END, controller.mostrarTextoSolucion())
 
         #Muestra la solución
         f=controller.mostrarSolucionTotal()
@@ -67,9 +66,9 @@ class Mostrar_Solucion(tk.Frame):
             self.botonSiguiente.place_forget()
             self.botonSolucionFinal.place_forget()
             messagebox.showwarning("Advertencia","Se encontró la solución")
-            T = tk.Text(self, height = 30, width = 36)
+            T = Text(self, height = 30, width = 36)
             T.place(x=950,y=0)
-            T.insert(tk.END, controller.mostrarTextoSolucion())
+            T.insert(END, controller.mostrarTextoSolucion())
             f=controller.mostrarSolucionTotal()
             canvas = FigureCanvasTkAgg(f, self)
             canvas.draw()
@@ -99,8 +98,8 @@ class Mostrar_Solucion(tk.Frame):
                 canvas = FigureCanvasTkAgg(f, self)
                 canvas.draw()
                 canvas.get_tk_widget().place(x=450,y=20)
-        T = tk.Text(self, height = 30, width = 36)
+        T = Text(self, height = 30, width = 36)
         T.place(x=950,y=0)
-        T.insert(tk.END, controller.mostrarTextoSolucion())
+        T.insert(END, controller.mostrarTextoSolucion())
             
 

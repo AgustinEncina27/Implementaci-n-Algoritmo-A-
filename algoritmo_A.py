@@ -1,7 +1,6 @@
 from nodo import *
 import copy
 import networkx as nx
-import random
 from matplotlib.figure import Figure
 
 class Algoritmo_A():
@@ -129,14 +128,6 @@ class Algoritmo_A():
     #Retorna las posiciones del arbol
     def hierarchy_pos(self,G, root=None, width=1., vert_gap = 0.2, vert_loc = 0, xcenter = 0.5):
         G=self.Arbol
-        if not nx.is_tree(G):
-            raise TypeError('cannot use hierarchy_pos on a graph that is not a tree')
-
-        if root is None:
-            if isinstance(G, nx.DiGraph):
-                root = next(iter(nx.topological_sort(G)))  #allows back compatibility with nx version 1.11
-            else:
-                root = random.choice(list(G.nodes))
 
         def _hierarchy_pos(G, root, width=1., vert_gap = 0.2, vert_loc = 0, xcenter = 0.5, pos = None, parent = None):
             if pos is None:

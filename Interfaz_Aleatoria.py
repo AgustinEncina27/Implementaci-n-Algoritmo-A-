@@ -1,8 +1,8 @@
 from tkinter import *
 from tkinter import messagebox
-import tkinter as tk
 
-class Aleatoria(tk.Frame):   
+
+class Aleatoria(Frame):   
     #Constructor Aleatoria
     def __init__(self, parent,controller): 
         super().__init__(parent)
