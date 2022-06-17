@@ -23,14 +23,14 @@ class Controller:
         f= self.algoritmo.mostrarCamino()
         return f
     
-    #Retorna si existe la relacion entre esos nodos
-    def existeRelacion(self,a,b):
-        return self.a.existeRelacion(a,b)
-    
-    #Si existe el nodo
-    def existeNodo(self,a):
-        return self.a.existeNodo(a)
+    #Retorna la figura del grafo que se esta trabajando
+    def getFigura(self):
+        return self.a.getFigura()
 
+    #Retorna si existe la relacion entre esos nodos
+    def existeRelacion(self,a):
+        return self.a.existeRelacion(a)
+    
     #Carga la cantidad de nodos y relaciones del grafo
     def CargarDatosGrafoAzar(self, cantidadNodos, cantidadRelaciones):
         a=cantidadNodos

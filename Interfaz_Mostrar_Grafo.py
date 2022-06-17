@@ -46,17 +46,17 @@ class Mostrar_Grafo(tk.Frame):
     def generarGrafo(self,parent,controller):
         inicial=self.nodos.get()
         final=self.relaciones.get()
-        if(not(controller.existeNodo(int(inicial)))):
-            messagebox.showwarning("Advertencia","El nodo inicial no existe en el grafo")
+        if(not(inicial.isdecimal()) or not(final.isdecimal())):
+                messagebox.showwarning("Advertencia","Por favor ingresar solo números enteros")
         else:
-            if(not(controller.existeNodo(int(final)))):
-                messagebox.showwarning("Advertencia","El nodo final no existe en el grafo")
+            if(not(controller.busquedaDeNodo(int(inicial))) or not(controller.busquedaDeNodo(int(final)))):
+                messagebox.showwarning("Advertencia","El nodo inicial o final ingresados no se encuentran en el grafo")
             else:
-                if(not(controller.existeRelacion(int(inicial),int(final)))):
-                    messagebox.showwarning("Advertencia","El nodo inicial y el nodo final no estan relacionados")
+                if(not(controller.existeRelacion(int(inicial)))):
+                    messagebox.showwarning("Advertencia","El nodo inicial no tiene relacion con otro nodo")
                 else:
-                    if(not(controller.busquedaDeNodo(int(inicial))) or not(controller.busquedaDeNodo(int(final)))):
-                        messagebox.showwarning("Advertencia","El nodo inicial o final ingresados no se encuentran en el grafo")
+                    if(not(controller.existeRelacion(int(final)))):
+                        messagebox.showwarning("Advertencia","El nodo final no tiene relacion con otro nodo")
                     else:
                         if(not(inicial.isdecimal()) or not(final.isdecimal())):
                             messagebox.showwarning("Advertencia","Por favor ingresar solo números enteros")

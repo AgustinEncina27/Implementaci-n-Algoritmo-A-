@@ -19,6 +19,7 @@ class Grafo():
 		self.G = nx.Graph()
 		self.grafo=[]
 		self.posG=dict()
+		self.figure = Figure(figsize=(5,4), dpi=100)
 	
 	#Nos indica si el nodo existe en el arbol
 	def busquedaDeNodo(self,nodo):
@@ -48,16 +49,16 @@ class Grafo():
 		return self.grafo
 	
 	#Retorna si existe la relacion entre esos nodos
-	#def neighbors(self, n):
-	#def __getitem__(self, n):
-	
-	def existeRelacion(self,a,b):
-		return self.G.has_edge(a,b)
+	def existeRelacion(self,a):
+		if(len(self.G.__getitem__(a))==0):
+			return False
+		else:
+			return True
 
-	#Si existe el nodo
-	def existeNodo(self,a):
-		return self.G.has_node(a)
-	
+	#Retorna la figura del grafo
+	def getFigura(self):
+		return self.figure
+		
 	#Inicializa todas las variables de nuevo
 	def limpiarTodo(self):
 		self.grafo=[]
@@ -101,12 +102,12 @@ class Grafo():
 		#Llama a la funcion para establecer el formato del grafo
 		#Estilos de los nodos
 		self.posG = nx.random_layout(self.G)
-		figure = Figure(figsize=(5,3.5), dpi=100)
-		a = figure.add_subplot(111)
+		self.figure = Figure(figsize=(5,3.5), dpi=100)
+		a = self.figure.add_subplot(111)
 
 		self.AtributosDeGrafo(self.G,self.posG,a)
 			
-		return figure
+		return self.figure
 
 	#Crea el grafo de la interfaz aleatoria
 	def CrearGraficoCarga(self,num,num2):
@@ -133,12 +134,12 @@ class Grafo():
 
 		#contiene la posicion de cada nodo, con esta funcion ponemos una semilla para asi no se juntan tanto los nodos
 		self.posG = nx.random_layout(self.G)
-		figure = Figure(figsize=(5,4), dpi=100)
-		a = figure.add_subplot(111)
+		self.figure = Figure(figsize=(5,4), dpi=100)
+		a = self.figure.add_subplot(111)
 
 		self.AtributosDeGrafo(self.G,self.posG,a)
 			
-		return figure
+		return self.figure
 
 
 

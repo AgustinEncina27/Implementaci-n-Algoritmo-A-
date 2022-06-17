@@ -91,11 +91,17 @@ class Cargar(tk.Frame):
                 if(inicial=="" or final==""):
                     messagebox.showwarning("Advertencia","Ingrese el NODO INICIAL y el NODO FINAL por favor")
                 else:
-                    if(int(inicial)==int(final)):
-                        messagebox.showwarning("Advertencia","Usted ya se encuentra en el nodo objetivo")
-                    elif self.controller:
-                        self.controller.CargarElGrafoEnRegistros(int(inicial),int(final))
-                        parent.mostrarFrameMostrar_Solucion()
+                    if(not(controller.existeRelacion(int(inicial)))):
+                        messagebox.showwarning("Advertencia","El nodo inicial no tiene relacion con otro nodo")
+                    else:
+                        if(not(controller.existeRelacion(int(final)))):
+                            messagebox.showwarning("Advertencia","El nodo final no tiene relacion con otro nodo")
+                        else:
+                            if(int(inicial)==int(final)):
+                                messagebox.showwarning("Advertencia","Usted ya se encuentra en el nodo objetivo")
+                            elif self.controller:
+                                self.controller.CargarElGrafoEnRegistros(int(inicial),int(final))
+                                parent.mostrarFrameMostrar_Solucion()
 
                 
                 

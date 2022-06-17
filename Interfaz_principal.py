@@ -18,7 +18,19 @@ class Principal(tk.Frame):
         self.pack(expand=True,fill="x")
         self.config(width="500",height="500")
         #Label
-        lbl1=Label(text="BIENVENIDO",font=("Comic Sans MS",28)).place(x=130,y=200)
+        lbl1=Label(text="BIENVENIDO",font=("Comic Sans MS",28)).place(x=130,y=5)
+        lbl2=Label(justify=LEFT,text="""Guía del usuario:\n 
+        En la esquina superior izquierda se encuentra el menu con las distintas funcionalidades\n
+        que posee esta aplicación.\n
+        1- Pestaña de "Inicio".\n
+            Contiene la opción "Volver al Principal" para volver a la pestaña principal(Actual).\n
+        2- Pestaña de "Creación del Grafo":\n
+            Contine dos opciones.\n
+                2.a- Cargar datos(nodos y costo de relaciones):\n
+                    Podemos crear un grafo indicando las relaciones con los nodos y sus costos.\n
+                2.b- Aleatorio:\n
+                    Indicas la cantidad de nodos y relaciones para crear un grafo aleatorio con las\n
+                    caracteristicas indicadas.""").place(x=0,y=80)
 
     #Obtiene el controlador
     def set_controller(self, controller):

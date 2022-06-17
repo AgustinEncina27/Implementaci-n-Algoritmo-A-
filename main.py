@@ -33,7 +33,7 @@ class App(tk.Tk):
         creacionGrafo=Menu(barraMenu,tearoff=0)
         inicio=Menu(barraMenu,tearoff=0)
         inicio.add_command(label="Volver al Pricipal", command=lambda:self.mostrarFramePrincipal())
-        creacionGrafo.add_command(label="Cargar datos(nodos y relaciones)", command=lambda:self.mostrarFrameCargar())
+        creacionGrafo.add_command(label="Cargar datos(nodos y costo de relaciones)", command=lambda:self.mostrarFrameCargar())
         creacionGrafo.add_command(label="Aleatorio", command=lambda:self.mostrarFrameAleatorio())
         barraMenu.add_cascade(label="Inicio",menu=inicio)
         barraMenu.add_cascade(label="Creación del grafo",menu=creacionGrafo)
