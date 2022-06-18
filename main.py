@@ -70,6 +70,11 @@ class App(Tk):
         self.view = Mostrar_Solucion(self,self.controller)
         self.view.set_controller(self.controller)
 
+    def mostrarFrameEditar_Grafo(self):
+        self.view.pack_forget()
+        self.view = Editar_Grafo(self,self.controller)
+        self.view.set_controller(self.controller)
+
 #Inicializa  la ventana
 if __name__ == '__main__':
     app = App()

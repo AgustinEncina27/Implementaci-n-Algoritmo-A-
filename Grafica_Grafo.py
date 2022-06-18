@@ -141,6 +141,44 @@ class Grafo():
 			
 		return self.figure
 
+	def agregarRelacion(self, nodo1, nodo2, costo):
+		self.G.add_weighted_edges_from([(nodo1,nodo2,costo)])
+		self.posG = nx.random_layout(self.G)
+		self.figure = Figure(figsize=(5,4), dpi=100)
+		a = self.figure.add_subplot(111)
+		self.AtributosDeGrafo(self.G,self.posG,a)
+
+	def agregarNodo(self, nuevoNodo, heuristica):
+		self.G.add_node(nuevoNodo)
+		nuevoNodo = Nodo(nuevoNodo,heuristica)
+		self.grafo.append(nuevoNodo)
+		self.posG = nx.random_layout(self.G)
+		self.figure = Figure(figsize=(5,4), dpi=100)
+		a = self.figure.add_subplot(111)
+		self.AtributosDeGrafo(self.G,self.posG,a)
+
+	def eliminarNodo(self, nodoAEliminar):
+		self.G.remove_node(nodoAEliminar)
+		self.posG = nx.random_layout(self.G)
+		self.figure = Figure(figsize=(5,4), dpi=100)
+		a = self.figure.add_subplot(111)
+		self.AtributosDeGrafo(self.G,self.posG,a)
+
+	def eliminarRelacion(self, nodo1AEliminar, nodo2AEliminar):
+		self.G.remove_edge(nodo1AEliminar,nodo2AEliminar)
+		self.posG = nx.random_layout(self.G)
+		self.figure = Figure(figsize=(5,4), dpi=100)
+		a = self.figure.add_subplot(111)
+		self.AtributosDeGrafo(self.G,self.posG,a)
+
+	def modificarCostoRelacion(self, nodo1, nodo2, nuevoCosto):
+		nx.set_edge_attributes(self.G,{(nodo1,nodo2):{'weight':nuevoCosto}})
+		self.posG = nx.random_layout(self.G)
+		self.figure = Figure(figsize=(5,4), dpi=100)
+		a = self.figure.add_subplot(111)
+		self.AtributosDeGrafo(self.G,self.posG,a)
+
+
 
 
 
