@@ -9,9 +9,9 @@ class Heuristicas(Frame):
     #Constructor de Cargar
     def __init__(self, parent,controller,final):
         super().__init__(parent)
-        ancho_ventana = 500
+        ancho_ventana = 1000
         lista1 = {}
-        alto_ventana = 600
+        alto_ventana = 500
         x_ventana = parent.winfo_screenwidth() // 2 - ancho_ventana // 2
         y_ventana = parent.winfo_screenheight() // 2 - alto_ventana // 2
         posicion = str(ancho_ventana) + "x" + str(alto_ventana) + "+" + str(x_ventana) + "+" + str(y_ventana)
@@ -28,7 +28,11 @@ class Heuristicas(Frame):
         f=controller.getFigura()
         canvas1 = FigureCanvasTkAgg(f, self)
         canvas1.draw()
-        canvas1.get_tk_widget().pack()
+        canvas1.get_tk_widget().pack(side=RIGHT)
+
+        #Botones
+        botonMostrar=Button(self,text="MOSTRAR SOLUCIÓN",command=lambda:self.MostrarSolucion(parent,controller,lista1))
+        botonMostrar.place(x=700,y=450)
 
         mi_canvas=Canvas(self)
         mi_canvas.pack(side=LEFT,fill=BOTH,expand=1)
@@ -44,10 +48,6 @@ class Heuristicas(Frame):
         mi_canvas.create_window((0,0),window=segundo_Frame,anchor="nw")
 
         cont=1
-        #Botones
-        botonMostrar=Button(segundo_Frame,text="MOSTRAR SOLUCIÓN",command=lambda:self.MostrarSolucion(parent,controller,lista1))
-        botonMostrar.grid(row=cont,column=0,pady=10,padx=10)
-        cont=cont+1
         #Labels y cuadros de textos
         for j in nodos:
             if(j!=final):
