@@ -24,6 +24,11 @@ class Grafo():
 	#Nos indica si el nodo existe en el arbol
 	def busquedaDeNodo(self,nodo):
 		return self.G.has_node(nodo)
+	
+	def cambiarHGrafo(self,nodo,h):
+		for n in self.grafo:
+			if(n.mostrarIdint()==nodo):
+				n.asignarH(h)
 
 	#Establece el formato del grafo
 	def AtributosDeGrafo(self,G,pos,a):
@@ -54,6 +59,10 @@ class Grafo():
 			return False
 		else:
 			return True
+
+	#Retorna la cantidad de nodos
+	def cantidadDeNodos(self):
+		return self.G.nodes()
 
 	#Retorna la figura del grafo
 	def getFigura(self):

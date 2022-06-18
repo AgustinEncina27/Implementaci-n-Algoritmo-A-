@@ -17,6 +17,9 @@ class Nodo:
     def calcularF(self):
         self.f = self.g + self.h
 
+    def asignarH(self,h):
+        self.h = h
+
     def calcularDistanciaAlNodoFinal(self):
         pass
     
@@ -32,4 +35,8 @@ class Nodo:
     def mostrarId(self):
         strId = str(self.id)
         return strId
+
+    #Retorna el id
+    def mostrarIdint(self):
+        return self.id
     

@@ -3,6 +3,7 @@ from Interfaz_Mostrar_Grafo import *
 from Interfaz_Cargar import *
 from Interfaz_Aleatoria import *
 from Interfaz_Mostrar_Solucion import *
+from Interfaz_Heuristicas import *
 from Interfaz_principal import Principal
 
 class App(Tk):
@@ -68,6 +69,11 @@ class App(Tk):
     def mostrarFrameMostrar_Solucion(self):
         self.view.pack_forget()
         self.view = Mostrar_Solucion(self,self.controller)
+        self.view.set_controller(self.controller)
+
+    def mostrarFrameHeuristicas(self,final):
+        self.view.pack_forget()
+        self.view = Heuristicas(self,self.controller,final)
         self.view.set_controller(self.controller)
 
 #Inicializa  la ventana

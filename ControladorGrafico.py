@@ -23,6 +23,14 @@ class Controller:
         f= self.algoritmo.mostrarCamino()
         return f
     
+    #Cambia la heuristica
+    def cambiarHGrafo(self,nodo,h):
+        self.a.cambiarHGrafo(nodo,h)
+    
+    #Retorna la cantidad de nodos en el grafo
+    def cantidadDeNodos(self):
+        return self.a.cantidadDeNodos()
+        
     #Retorna la figura del grafo que se esta trabajando
     def getFigura(self):
         return self.a.getFigura()

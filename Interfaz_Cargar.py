@@ -44,7 +44,7 @@ class Cargar(Frame):
         
         #Botones
         botonCreacion=Button(text="CREAR RELACIÓN",command=lambda:self.CargarGrafo(lbl3,self.inicial,lbl4,self.final,botonMostrar)).place(x=330,y=70)
-        botonMostrar=Button(text="MOSTRAR SOLUCIÓN",command=lambda:self.MostrarSolucion(parent,controller))
+        botonMostrar=Button(text="CARGAR HEURISTICAS",command=lambda:self.MostrarSolucion(parent,controller))
 
     #Obtiene el controlador 
     def set_controller(self, controller):
@@ -100,7 +100,7 @@ class Cargar(Frame):
                                 messagebox.showwarning("Advertencia","Usted ya se encuentra en el nodo objetivo")
                             elif self.controller:
                                 self.controller.CargarElGrafoEnRegistros(int(inicial),int(final))
-                                parent.mostrarFrameMostrar_Solucion()
+                                parent.mostrarFrameHeuristicas(int(final))
 
                 
                 
