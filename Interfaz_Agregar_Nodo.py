@@ -29,5 +29,8 @@ class Agregar_Nodo(Toplevel):
             if(str(nuevoNodo)=="" or str(heuristica)==""):
                 messagebox.showwarning("Advertencia","Ingrese el NUEVO NODO y la heuristica por favor")
             else:
-                controller.agregarNuevoNodo(int(nuevoNodo),int(heuristica))
-                master.refrescarFigura()
+                bandera = controller.agregarNuevoNodo(int(nuevoNodo),int(heuristica))
+                if(bandera==2):
+                    messagebox.showwarning("Advertencia","El NODO ingresado ya EXISTE, ingrese uno NUEVO")
+                else:
+                    master.refrescarFigura(controller)

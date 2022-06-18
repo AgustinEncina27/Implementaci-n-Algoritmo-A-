@@ -34,5 +34,13 @@ class Modificar_Costo_Relacion(Toplevel):
             if(str(nodo1)=="" or str(nodo2)=="" or str(nuevoCosto)==""):
                 messagebox.showwarning("Advertencia","Ingrese los NODOS y el COSTO de la RELACION por favor")
             else:
-                controller.modificarCostoRelacion(int(nodo1),int(nodo2),int(nuevoCosto))
-                master.refrescarFigura()
+                if(int(nodo1)==int(nodo2)):
+                    messagebox.showwarning("Advertencia","El NODO 1  y el NODO 2 tiene que ser diferentes")
+                else:
+                    bandera =controller.modificarCostoRelacion(int(nodo1),int(nodo2),int(nuevoCosto))
+                    if(bandera==2):
+                        messagebox.showwarning("Advertencia","Ingrese unicamente NODOS VALIDOS")
+                    elif (bandera==3):
+                        messagebox.showwarning("Advertencia","No existe RELACION entre los nodos ingresados")
+                    else:
+                        master.refrescarFigura(controller)

@@ -29,5 +29,11 @@ class Eliminar_Relacion(Toplevel):
             if(str(nodo1AEliminar)=="" or str(nodo2AEliminar)==""):
                 messagebox.showwarning("Advertencia","Ingrese los NODOS de la RELACION a ELIMINAR por favor")
             else:
-                controller.eliminarRelacion(int(nodo1AEliminar),int(nodo2AEliminar))
-                master.refrescarFigura()
+                if(int(nodo1AEliminar)==int(nodo2AEliminar)):
+                    messagebox.showwarning("Advertencia","El NODO 1  y el NODO 2 tiene que ser diferentes")
+                else:
+                    bandera = controller.eliminarRelacion(int(nodo1AEliminar),int(nodo2AEliminar))
+                    if(bandera==2):
+                        messagebox.showwarning("Advertencia","Ingrese unicamente NODOS VALIDOS")
+                    else:
+                        master.refrescarFigura(controller)

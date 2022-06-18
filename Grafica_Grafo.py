@@ -20,6 +20,7 @@ class Grafo():
 		self.grafo=[]
 		self.posG=dict()
 		self.figure = Figure(figsize=(5,4), dpi=100)
+		self.randomSeed = random.randint(1,1000)
 	
 	#Nos indica si el nodo existe en el arbol
 	def busquedaDeNodo(self,nodo):
@@ -101,7 +102,7 @@ class Grafo():
 									
 		#Llama a la funcion para establecer el formato del grafo
 		#Estilos de los nodos
-		self.posG = nx.random_layout(self.G)
+		self.posG = nx.random_layout(self.G,seed=self.randomSeed)
 		self.figure = Figure(figsize=(5,3.5), dpi=100)
 		a = self.figure.add_subplot(111)
 
@@ -133,7 +134,7 @@ class Grafo():
 						break		
 
 		#contiene la posicion de cada nodo, con esta funcion ponemos una semilla para asi no se juntan tanto los nodos
-		self.posG = nx.random_layout(self.G)
+		self.posG = nx.random_layout(self.G,seed=self.randomSeed)
 		self.figure = Figure(figsize=(5,4), dpi=100)
 		a = self.figure.add_subplot(111)
 
@@ -142,41 +143,95 @@ class Grafo():
 		return self.figure
 
 	def agregarRelacion(self, nodo1, nodo2, costo):
-		self.G.add_weighted_edges_from([(nodo1,nodo2,costo)])
-		self.posG = nx.random_layout(self.G)
-		self.figure = Figure(figsize=(5,4), dpi=100)
-		a = self.figure.add_subplot(111)
-		self.AtributosDeGrafo(self.G,self.posG,a)
+		if(nodo1 not in self.G.nodes() or nodo2 not in self.G.nodes()):
+			return 2
+		else:
+			self.G.add_weighted_edges_from([(nodo1,nodo2,costo)])
+			self.posG = nx.random_layout(self.G,seed=self.randomSeed)
+			self.figure = Figure(figsize=(5,4), dpi=100)
+			a = self.figure.add_subplot(111)
+			self.AtributosDeGrafo(self.G,self.posG,a)
+			return 1
 
 	def agregarNodo(self, nuevoNodo, heuristica):
-		self.G.add_node(nuevoNodo)
-		nuevoNodo = Nodo(nuevoNodo,heuristica)
-		self.grafo.append(nuevoNodo)
-		self.posG = nx.random_layout(self.G)
-		self.figure = Figure(figsize=(5,4), dpi=100)
-		a = self.figure.add_subplot(111)
-		self.AtributosDeGrafo(self.G,self.posG,a)
+		if(nuevoNodo in self.G.nodes()):
+			return 2
+		else:
+			self.G.add_node(nuevoNodo)
+			nuevoNodo = Nodo(nuevoNodo,heuristica)
+			self.grafo.append(nuevoNodo)
+			self.posG = nx.random_layout(self.G, seed=self.randomSeed)
+			self.figure = Figure(figsize=(5,4), dpi=100)
+			a = self.figure.add_subplot(111)
+			self.AtributosDeGrafo(self.G,self.posG,a)
+			return 1
 
 	def eliminarNodo(self, nodoAEliminar):
-		self.G.remove_node(nodoAEliminar)
-		self.posG = nx.random_layout(self.G)
-		self.figure = Figure(figsize=(5,4), dpi=100)
-		a = self.figure.add_subplot(111)
-		self.AtributosDeGrafo(self.G,self.posG,a)
+		if(nodoAEliminar not in self.G.nodes()):
+			return 2
+		else:
+			self.G.remove_node(nodoAEliminar)
+			self.posG = nx.random_layout(self.G,self.randomSeed)
+			self.figure = Figure(figsize=(5,4), dpi=100)
+			a = self.figure.add_subplot(111)
+			self.AtributosDeGrafo(self.G,self.posG,a)
+			return 1
 
 	def eliminarRelacion(self, nodo1AEliminar, nodo2AEliminar):
-		self.G.remove_edge(nodo1AEliminar,nodo2AEliminar)
-		self.posG = nx.random_layout(self.G)
-		self.figure = Figure(figsize=(5,4), dpi=100)
-		a = self.figure.add_subplot(111)
-		self.AtributosDeGrafo(self.G,self.posG,a)
+		if(nodo1AEliminar not in self.G.nodes() or nodo2AEliminar not in self.G.nodes()):
+			return 2
+		else:
+			self.G.remove_edge(nodo1AEliminar,nodo2AEliminar)
+			self.posG = nx.random_layout(self.G,self.randomSeed)
+			self.figure = Figure(figsize=(5,4), dpi=100)
+			a = self.figure.add_subplot(111)
+			self.AtributosDeGrafo(self.G,self.posG,a)
+			return 1
 
 	def modificarCostoRelacion(self, nodo1, nodo2, nuevoCosto):
-		nx.set_edge_attributes(self.G,{(nodo1,nodo2):{'weight':nuevoCosto}})
-		self.posG = nx.random_layout(self.G)
-		self.figure = Figure(figsize=(5,4), dpi=100)
-		a = self.figure.add_subplot(111)
-		self.AtributosDeGrafo(self.G,self.posG,a)
+		if(nodo1 not in self.G.nodes() or nodo2 not in self.G.nodes()):
+			return 2
+		else:
+			if((nodo1,nodo2) not in self.G.edges() or (nodo2,nodo1) not in self.G.edges()):
+				return 3
+			else:
+				if((nodo1,nodo2) not in self.G.edges()):
+					self.G.remove_edge(nodo1,nodo2)
+				if((nodo2,nodo1) not in self.G.edges()):
+					self.G.remove_edge(nodo2,nodo1)
+				nx.set_edge_attributes(self.G,{(nodo1,nodo2):{'weight':nuevoCosto}})
+				self.posG = nx.random_layout(self.G,self.randomSeed)
+				self.figure = Figure(figsize=(5,4), dpi=100)
+				a = self.figure.add_subplot(111)
+				self.AtributosDeGrafo(self.G,self.posG,a)
+				return 1
+
+	def cambiarNodoInicial(self, nuevoNodoInicial):
+		for nodo in self.grafo:
+			if(nodo.inicial):
+				nodo.inicial=False
+		for nodo in self.grafo:
+			if(nodo.id==nuevoNodoInicial):
+				nodo.inicial=True
+
+	def cambiarNodoFinal(self, nuevoNodoFinal):
+		for nodo in self.grafo:
+			if(nodo.final):
+				nodo.final=False
+		for nodo in self.grafo:
+			if(nodo.id==nuevoNodoFinal):
+				nodo.final=True
+
+	def comprobarRelaciones(self):
+		banderaRelaciones = 1
+		for n in self.G.nodes():
+			if (not list(self.G.neighbors(n))):
+				print(list(self.G.neighbors(n)))
+				banderaRelaciones = 0
+				print(banderaRelaciones)
+		return banderaRelaciones
+	
+
 
 
 

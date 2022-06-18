@@ -24,5 +24,8 @@ class Eliminar_Nodo(Toplevel):
             if(str(nodoAEliminar)==""):
                 messagebox.showwarning("Advertencia","Ingrese el NODO a ELIMINAR por favor")
             else:
-                controller.eliminarNodo(int(nodoAEliminar))
-                master.refrescarFigura()
+                bandera = controller.eliminarNodo(int(nodoAEliminar))
+                if(bandera==2):
+                    messagebox.showwarning("Advertencia","Ingrese unicamente un NODO VALIDO")
+                else:
+                    master.refrescarFigura(controller)

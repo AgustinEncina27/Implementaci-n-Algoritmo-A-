@@ -38,5 +38,8 @@ class Agregar_Relacion(Toplevel):
                 if(int(nodo1)==int(nodo2)):
                     messagebox.showwarning("Advertencia","El NODO 1  y el NODO 2 tiene que ser diferentes")
                 elif controller:
-                    controller.agregarRelacionGrafo(int(nodo1),int(nodo2),int(relaciones))
-                    master.refrescarFigura()
+                    bandera = controller.agregarRelacionGrafo(int(nodo1),int(nodo2),int(relaciones))
+                    if(bandera==2):
+                        messagebox.showwarning("Advertencia","Ingrese unicamente NODOS VALIDOS")
+                    else:
+                        master.refrescarFigura(controller)
