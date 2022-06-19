@@ -91,7 +91,34 @@ class Controller:
     #Nos indica si el nodo existe en el arbol
     def busquedaDeNodo(self,nodo):
         return  self.a.busquedaDeNodo(nodo)
+
+    def agregarRelacionGrafo(self, nodo1, nodo2, costo):
+        return self.a.agregarRelacion(nodo1, nodo2, costo)
     
+    def agregarNuevoNodo(self, nuevoNodo, heuristica):
+        return self.a.agregarNodo(nuevoNodo, heuristica)
+
+    def eliminarNodo(self, nodoAElimniar):
+        return self.a.eliminarNodo(nodoAElimniar)
+
+    def eliminarRelacion(self, nodoAEliminar1, nodoAEliminar2):
+        return self.a.eliminarRelacion(nodoAEliminar1, nodoAEliminar2)
+
+    def modificarCostoRelacion(self, nodo1, nodo2, nuevoCosto):
+        return self.a.modificarCostoRelacion(nodo1,nodo2,nuevoCosto)
+
+    def cambiarNodoInicial(self, nuevoNodoInicial):
+        return self.a.cambiarNodoInicial(nuevoNodoInicial)
+
+    def cambiarNodoFinal(self, nuevoNodoFinal):
+        return self.a.cambiarNodoFinal(nuevoNodoFinal)
+
+    def comprobarRelaciones(self):
+        return self.a.comprobarRelaciones()
+    
+
+    
+
     
         
     

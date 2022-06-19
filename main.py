@@ -74,6 +74,10 @@ class App(Tk):
     def mostrarFrameHeuristicas(self,final):
         self.view.pack_forget()
         self.view = Heuristicas(self,self.controller,final)
+        
+    def mostrarFrameEditar_Grafo(self):
+        self.view.pack_forget()
+        self.view = Editar_Grafo(self,self.controller)
         self.view.set_controller(self.controller)
 
 #Inicializa  la ventana

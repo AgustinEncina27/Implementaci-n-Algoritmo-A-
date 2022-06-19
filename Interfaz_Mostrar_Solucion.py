@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from Interfaz_Editar_Grafo import *
 
 
 class Mostrar_Solucion(Frame):
@@ -30,6 +31,8 @@ class Mostrar_Solucion(Frame):
         self.botonSolucionFinal.place(x=500,y=440)
         self.botonSiguiente=Button(text="SIGUIENTE PASO",command=lambda:self.mostrarSolucionParcial(controller))
         self.botonSiguiente.place(x=790,y=440)
+        self.botonEditarGrafo=Button(text="EDITAR GRAFO",command=lambda:self.mostrarEditarGrafo(parent,controller))
+        self.botonEditarGrafo.place(x=180,y=440)
         
         #Muestra el grafo con el que se esta trabajando
         f=controller.getFigura()
@@ -102,4 +105,6 @@ class Mostrar_Solucion(Frame):
         T.place(x=950,y=0)
         T.insert(END, controller.mostrarTextoSolucion())
             
+    def mostrarEditarGrafo(self,parent,controller):
+        parent.mostrarFrameEditar_Grafo()
 
