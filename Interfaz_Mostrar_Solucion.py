@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from setuptools import Command
 from Interfaz_Editar_Grafo import *
 
 
@@ -9,7 +10,7 @@ class Mostrar_Solucion(Frame):
     #Constructor de Mostrar_Solución
     def __init__(self, parent,controller):
         super().__init__(parent)
-        ancho_ventana = 1250
+        ancho_ventana = 1350
         alto_ventana = 500
         x_ventana = parent.winfo_screenwidth() // 2 - ancho_ventana // 2
         y_ventana = parent.winfo_screenheight() // 2 - alto_ventana // 2
@@ -24,13 +25,13 @@ class Mostrar_Solucion(Frame):
         lbl0=Label(text="Grafo Original")
         lbl0.place(x=180,y=0)
         lbl1=Label(text="Árbol de SOLUCIÓN")
-        lbl1.place(x=650,y=0)
+        lbl1.place(x=750,y=0)
 
         #Boton
         self.botonSolucionFinal=Button(text="MOSTRAR SOLUCIÓN FINAL",command=lambda:[self.mostrarSolucionTotal(controller),self.botonSiguiente.place_forget()])
-        self.botonSolucionFinal.place(x=500,y=440)
+        self.botonSolucionFinal.place(x=600,y=440)
         self.botonSiguiente=Button(text="SIGUIENTE PASO",command=lambda:self.mostrarSolucionParcial(controller))
-        self.botonSiguiente.place(x=790,y=440)
+        self.botonSiguiente.place(x=890,y=440)
         self.botonEditarGrafo=Button(text="EDITAR GRAFO",command=lambda:self.mostrarEditarGrafo(parent,controller))
         self.botonEditarGrafo.place(x=180,y=440)
         
@@ -40,21 +41,25 @@ class Mostrar_Solucion(Frame):
         canvas1.draw()
         canvas1.get_tk_widget().place(x=-35,y=20)
         
+        
+        #HEURISTICAS
+        T2 = Text(self, height = 31, width = 15)
+        T2.place(x=445,y=0)
+        T2.insert(END, controller.mostrarHeuristica())
         #Separador
-        ttk.Separator(self, orient="vertical").place(x=445,y=0,relwidth=0.2, relheight=1)
+        ttk.Separator(self, orient="vertical").place(x=545,y=0,relwidth=0.2, relheight=1)
 
-        #Muestra informaci+on sobre la solución
+        #Muestra informacion sobre la solución
         controller.cargarDatosIniciales()
         controller.iniciarSolucionParcial()
-        T = Text(self, height = 30, width = 36)
-        T.place(x=950,y=0)
+        T = Text(self, height = 31, width = 36)
+        T.place(x=1050,y=0)
         T.insert(END, controller.mostrarTextoSolucion())
-
         #Muestra la solución
         f=controller.mostrarSolucionTotal()
         canvas = FigureCanvasTkAgg(f, self)
         canvas.draw()
-        canvas.get_tk_widget().place(x=450,y=20)
+        canvas.get_tk_widget().place(x=550,y=20)
 
         
        
@@ -70,12 +75,12 @@ class Mostrar_Solucion(Frame):
             self.botonSolucionFinal.place_forget()
             messagebox.showwarning("Advertencia","Se encontró la solución")
             T = Text(self, height = 30, width = 36)
-            T.place(x=950,y=0)
+            T.place(x=1050,y=0)
             T.insert(END, controller.mostrarTextoSolucion())
             f=controller.mostrarSolucionTotal()
             canvas = FigureCanvasTkAgg(f, self)
             canvas.draw()
-            canvas.get_tk_widget().place(x=450,y=20)
+            canvas.get_tk_widget().place(x=550,y=20)
         else:
             if(z==1):
                 self.botonSiguiente.place_forget()
@@ -92,7 +97,7 @@ class Mostrar_Solucion(Frame):
             f=controller.mostrarSolucionTotal()
             canvas = FigureCanvasTkAgg(f, self)
             canvas.draw()
-            canvas.get_tk_widget().place(x=450,y=20)
+            canvas.get_tk_widget().place(x=550,y=20)
         else:
             if(z==2):
                 messagebox.showwarning("Advertencia","No se encontró la solución")
@@ -100,9 +105,9 @@ class Mostrar_Solucion(Frame):
                 f=controller.mostrarSolucionTotal()
                 canvas = FigureCanvasTkAgg(f, self)
                 canvas.draw()
-                canvas.get_tk_widget().place(x=450,y=20)
+                canvas.get_tk_widget().place(x=550,y=20)
         T = Text(self, height = 30, width = 36)
-        T.place(x=950,y=0)
+        T.place(x=1050,y=0)
         T.insert(END, controller.mostrarTextoSolucion())
             
     def mostrarEditarGrafo(self,parent,controller):
