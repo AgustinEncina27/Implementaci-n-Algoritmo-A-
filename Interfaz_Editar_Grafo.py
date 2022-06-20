@@ -47,7 +47,11 @@ class Editar_Grafo(Frame):
         self.f=controller.getFigura()
         self.canvas1 = FigureCanvasTkAgg(self.f, self)
         self.canvas1.draw()
-        self.canvas1.get_tk_widget().place(x=260,y=60)
+        self.canvas1.get_tk_widget().place(x=170,y=60)
+
+        self.T2 = Text(self, height = 25, width = 15)
+        self.T2.place(x=740,y=60)
+        self.T2.insert(END, controller.mostrarHeuristica())
 
     def set_controller(self, controller):
         self.controller = controller
@@ -56,7 +60,10 @@ class Editar_Grafo(Frame):
         self.f=controller.getFigura()
         self.canvas1 = FigureCanvasTkAgg(self.f, self)
         self.canvas1.draw()
-        self.canvas1.get_tk_widget().place(x=230,y=60)
+        self.canvas1.get_tk_widget().place(x=170,y=60)
+        self.T2 = Text(self, height = 25, width = 15)
+        self.T2.place(x=740,y=60)
+        self.T2.insert(END, controller.mostrarHeuristica())
 
     def volverPantallaAnterior(self, parent,controller):
         banderaVolver = controller.comprobarRelaciones()

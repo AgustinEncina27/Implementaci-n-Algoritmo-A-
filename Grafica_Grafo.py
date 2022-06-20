@@ -198,6 +198,9 @@ class Grafo():
 				self.figure = Figure(figsize=(5,4), dpi=100)
 				a = self.figure.add_subplot(111)
 				self.AtributosDeGrafo(self.G,self.posG,a)
+				for nodo in self.grafo:
+					if(nodo.mostrarIdint()==nodoAEliminar):
+						self.grafo.remove(nodo)
 				return 1
 
 	def eliminarRelacion(self, nodo1AEliminar, nodo2AEliminar):
@@ -233,6 +236,9 @@ class Grafo():
 			return 2
 		else:
 			for nodo in self.grafo:
+				if(nodo.final and nodo.id==nuevoNodoInicial):
+					return 3
+			for nodo in self.grafo:
 				if(nodo.inicial):
 					nodo.inicial=False
 			for nodo in self.grafo:
@@ -244,11 +250,17 @@ class Grafo():
 			return 2
 		else:
 			for nodo in self.grafo:
+				if(nodo.inicial and nodo.id==nuevoNodoFinal):
+					return 3
+			for nodo in self.grafo:
 				if(nodo.final):
 					nodo.final=False
 			for nodo in self.grafo:
 				if(nodo.id==nuevoNodoFinal):
 					nodo.final=True
+			self.cambiarHGrafo(nuevoNodoFinal,0)
+
+			
 
 	def comprobarRelaciones(self):
 		banderaRelaciones = 1

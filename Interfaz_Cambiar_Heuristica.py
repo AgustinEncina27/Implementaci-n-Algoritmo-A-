@@ -37,6 +37,9 @@ class Cambiar_Heuristica(Toplevel):
                     controller.cambiarHGrafo(int(nodo), int(nuevaHeuristica))
                     master.refrescarFigura(controller)
                 else:
-                    messagebox.showwarning("Advertencia","Ingrese unicamente un NODO VALIDO")                    
+                    if(bandera==3):
+                        messagebox.showwarning("Advertencia","No puede modificar la HEURISTICA del NODO FINAL")
+                    else:
+                        messagebox.showwarning("Advertencia","Ingrese unicamente un NODO VALIDO")                 
         self.destroy()
         self.update()

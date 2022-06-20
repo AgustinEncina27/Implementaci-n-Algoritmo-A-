@@ -31,6 +31,9 @@ class Cambiar_Nodo_Inicial(Toplevel):
                 if(bandera==2):
                     messagebox.showwarning("Advertencia","Ingrese unicamente un NODO VALIDO")
                 else:
-                    master.refrescarFigura(controller)
+                    if(bandera==3):
+                        messagebox.showwarning("Advertencia","Los NODOS FINAL e INICIAL deben ser diferentes")
+                    else:
+                        master.refrescarFigura(controller)
         self.destroy()
         self.update()

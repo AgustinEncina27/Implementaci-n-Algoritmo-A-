@@ -141,8 +141,17 @@ class Controller:
             self.cambiarHGrafo(a[0],a[1])
     
     def comprobarNodoValidoHeuristica(self, nodo):
-        if(nodo in self.a.G.nodes()):
-            return 1
+        bandera=0
+        if(self.a.busquedaDeNodo(nodo)):
+            for nodoBuscado in self.a.getGrafo():
+                if(nodoBuscado.final and nodoBuscado.mostrarIdint()==nodo):
+                    bandera=1
+                    print("Aaaaa")
+                    print(nodoBuscado.mostrarId())
+            if(bandera==1):
+                return 3
+            else:
+                return 1
         else:
             return 2
 
