@@ -180,14 +180,17 @@ class Grafo():
 			return 1
 
 	def eliminarNodo(self, nodoAEliminar):
-		nodoFinalInicial = -1
+		nodoFinal = -1
+		nodoInicial = -1
 		if(nodoAEliminar not in self.G.nodes()):
 			return 2
 		else:
 			for a in self.grafo:
 				if(a.inicial or a.final):
-					nodoFinalInicial = a.id
-			if(nodoAEliminar==nodoFinalInicial):
+					nodoInicial = a.id
+				if(a.final):
+					nodoFinal = a.id
+			if(nodoAEliminar==nodoFinal or nodoAEliminar==nodoInicial):
 				return 3
 			else:
 				self.G.remove_node(nodoAEliminar)
