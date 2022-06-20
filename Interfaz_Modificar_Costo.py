@@ -8,7 +8,10 @@ class Modificar_Costo_Relacion(Toplevel):
         
         super().__init__(master = master)
         self.title("Modificar Costo de la Relacion")
-        self.geometry("500x250")
+        x_ventana = master.winfo_screenwidth() // 2 - 500 // 2
+        y_ventana = master.winfo_screenheight() // 2 - 250 // 2
+        posicion = str(500) + "x" + str(250) + "+" + str(x_ventana) + "+" + str(y_ventana)
+        self.geometry(posicion)
 
         lbl1=Label(self,text="Ingrese el NODO 1:")
         lbl1.place(x=5,y=40)
@@ -44,3 +47,5 @@ class Modificar_Costo_Relacion(Toplevel):
                         messagebox.showwarning("Advertencia","No existe RELACION entre los nodos ingresados")
                     else:
                         master.refrescarFigura(controller)
+        self.destroy()
+        self.update()

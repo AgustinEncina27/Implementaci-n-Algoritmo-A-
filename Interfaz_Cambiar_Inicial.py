@@ -8,7 +8,10 @@ class Cambiar_Nodo_Inicial(Toplevel):
         
         super().__init__(master = master)
         self.title("Cambiar Nodo Inicial")
-        self.geometry("500x250")
+        x_ventana = master.winfo_screenwidth() // 2 - 500 // 2
+        y_ventana = master.winfo_screenheight() // 2 - 250 // 2
+        posicion = str(500) + "x" + str(250) + "+" + str(x_ventana) + "+" + str(y_ventana)
+        self.geometry(posicion)
 
         lbl1=Label(self,text="Ingrese el nuevo NODO INICIAL:")
         lbl1.place(x=5,y=40)
@@ -28,4 +31,6 @@ class Cambiar_Nodo_Inicial(Toplevel):
                 if(bandera==2):
                     messagebox.showwarning("Advertencia","Ingrese unicamente un NODO VALIDO")
                 else:
-                    master.refrescarFigura()
+                    master.refrescarFigura(controller)
+        self.destroy()
+        self.update()

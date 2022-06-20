@@ -50,6 +50,9 @@ class Grafo():
 	def LimpiarGrafo(self):
 		self.G.clear()
 
+	def LimpiarListaGrafo(self):
+		self.grafo = []
+
 	#Retorna los registros cargados del grafo
 	def getGrafo(self):
 		return self.grafo
@@ -177,68 +180,78 @@ class Grafo():
 			return 1
 
 	def eliminarNodo(self, nodoAEliminar):
+		nodoFinalInicial = -1
 		if(nodoAEliminar not in self.G.nodes()):
 			return 2
 		else:
-			self.G.remove_node(nodoAEliminar)
-			self.posG = nx.random_layout(self.G,self.randomSeed)
-			self.figure = Figure(figsize=(5,4), dpi=100)
-			a = self.figure.add_subplot(111)
-			self.AtributosDeGrafo(self.G,self.posG,a)
-			return 1
+			for a in self.grafo:
+				if(a.inicial or a.final):
+					nodoFinalInicial = a.id
+			if(nodoAEliminar==nodoFinalInicial):
+				return 3
+			else:
+				self.G.remove_node(nodoAEliminar)
+				self.posG = nx.random_layout(self.G,seed=self.randomSeed)
+				self.figure = Figure(figsize=(5,4), dpi=100)
+				a = self.figure.add_subplot(111)
+				self.AtributosDeGrafo(self.G,self.posG,a)
+				return 1
 
 	def eliminarRelacion(self, nodo1AEliminar, nodo2AEliminar):
 		if(nodo1AEliminar not in self.G.nodes() or nodo2AEliminar not in self.G.nodes()):
 			return 2
 		else:
-			self.G.remove_edge(nodo1AEliminar,nodo2AEliminar)
-			self.posG = nx.random_layout(self.G,self.randomSeed)
-			self.figure = Figure(figsize=(5,4), dpi=100)
-			a = self.figure.add_subplot(111)
-			self.AtributosDeGrafo(self.G,self.posG,a)
-			return 1
+			if(self.G.has_edge(nodo1AEliminar,nodo2AEliminar)):
+				self.G.remove_edge(nodo1AEliminar,nodo2AEliminar)
+				self.posG = nx.random_layout(self.G,seed=self.randomSeed)
+				self.figure = Figure(figsize=(5,4), dpi=100)
+				a = self.figure.add_subplot(111)
+				self.AtributosDeGrafo(self.G,self.posG,a)
+				return 1
+			else:
+				return 3
 
 	def modificarCostoRelacion(self, nodo1, nodo2, nuevoCosto):
 		if(nodo1 not in self.G.nodes() or nodo2 not in self.G.nodes()):
 			return 2
 		else:
-			if((nodo1,nodo2) not in self.G.edges() or (nodo2,nodo1) not in self.G.edges()):
+			if(not self.G.has_edge(nodo1,nodo2)):
 				return 3
 			else:
-				if((nodo1,nodo2) not in self.G.edges()):
-					self.G.remove_edge(nodo1,nodo2)
-				if((nodo2,nodo1) not in self.G.edges()):
-					self.G.remove_edge(nodo2,nodo1)
-				nx.set_edge_attributes(self.G,{(nodo1,nodo2):{'weight':nuevoCosto}})
-				self.posG = nx.random_layout(self.G,self.randomSeed)
+				nx.set_edge_attributes(self.G,{(nodo1,nodo2):{'weight':nuevoCosto}}) #funcion update o add_weighted_edd
+				self.posG = nx.random_layout(self.G,seed=self.randomSeed)
 				self.figure = Figure(figsize=(5,4), dpi=100)
 				a = self.figure.add_subplot(111)
 				self.AtributosDeGrafo(self.G,self.posG,a)
 				return 1
 
 	def cambiarNodoInicial(self, nuevoNodoInicial):
-		for nodo in self.grafo:
-			if(nodo.inicial):
-				nodo.inicial=False
-		for nodo in self.grafo:
-			if(nodo.id==nuevoNodoInicial):
-				nodo.inicial=True
+		if(nuevoNodoInicial not in self.G.nodes()):
+			return 2
+		else:
+			for nodo in self.grafo:
+				if(nodo.inicial):
+					nodo.inicial=False
+			for nodo in self.grafo:
+				if(nodo.id==nuevoNodoInicial):
+					nodo.inicial=True
 
 	def cambiarNodoFinal(self, nuevoNodoFinal):
-		for nodo in self.grafo:
-			if(nodo.final):
-				nodo.final=False
-		for nodo in self.grafo:
-			if(nodo.id==nuevoNodoFinal):
-				nodo.final=True
+		if(nuevoNodoFinal not in self.G.nodes()):
+			return 2
+		else:
+			for nodo in self.grafo:
+				if(nodo.final):
+					nodo.final=False
+			for nodo in self.grafo:
+				if(nodo.id==nuevoNodoFinal):
+					nodo.final=True
 
 	def comprobarRelaciones(self):
 		banderaRelaciones = 1
 		for n in self.G.nodes():
 			if (not list(self.G.neighbors(n))):
-				print(list(self.G.neighbors(n)))
 				banderaRelaciones = 0
-				print(banderaRelaciones)
 		return banderaRelaciones
 	
 

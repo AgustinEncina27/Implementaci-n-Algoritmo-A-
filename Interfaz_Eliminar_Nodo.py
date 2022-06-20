@@ -8,7 +8,10 @@ class Eliminar_Nodo(Toplevel):
         
         super().__init__(master = master)
         self.title("Eliminar Nodo")
-        self.geometry("500x250")
+        x_ventana = master.winfo_screenwidth() // 2 - 500 // 2
+        y_ventana = master.winfo_screenheight() // 2 - 250 // 2
+        posicion = str(500) + "x" + str(250) + "+" + str(x_ventana) + "+" + str(y_ventana)
+        self.geometry(posicion)
 
         lbl1=Label(self,text="Ingrese el NODO a ELIMINAR:")
         lbl1.place(x=5,y=40)
@@ -28,4 +31,9 @@ class Eliminar_Nodo(Toplevel):
                 if(bandera==2):
                     messagebox.showwarning("Advertencia","Ingrese unicamente un NODO VALIDO")
                 else:
-                    master.refrescarFigura(controller)
+                    if(bandera==3):
+                        messagebox.showwarning("Advertencia","No puede eliminar un NODO FINAL o INICIAL, antes debe cambiarlo")
+                    else:
+                        master.refrescarFigura(controller)
+        self.destroy()
+        self.update()

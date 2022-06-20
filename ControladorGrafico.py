@@ -116,6 +116,17 @@ class Controller:
     def comprobarRelaciones(self):
         return self.a.comprobarRelaciones()
     
+    def actualizarDatosGrafo(self):
+        for nodo in self.a.getGrafo():
+            if(nodo.inicial):
+                a=nodo.id
+        for nodo in self.a.getGrafo():
+            if(nodo.final):
+                b=nodo.id
+        self.c=[a,b]
+        self.a.LimpiarListaGrafo()
+        self.a.CargaARegistro(self.c)
+
 
     
 

@@ -1,3 +1,4 @@
+from codeop import CommandCompiler
 from tkinter import *
 from tkinter import messagebox
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -8,12 +9,13 @@ from Interfaz_Eliminar_Relacion import *
 from Interfaz_Modificar_Costo import *
 from Interfaz_Cambiar_Final import *
 from Interfaz_Cambiar_Inicial import *
+from Interfaz_Cambiar_Heuristica import *
 
 class Editar_Grafo(Frame):
     def __init__(self, parent,controller):
         super().__init__(parent)
-        ancho_ventana = 900
-        alto_ventana = 500
+        ancho_ventana = 1050
+        alto_ventana = 550
         x_ventana = parent.winfo_screenwidth() // 2 - ancho_ventana // 2
         y_ventana = parent.winfo_screenheight() // 2 - alto_ventana // 2
         posicion = str(ancho_ventana) + "x" + str(alto_ventana) + "+" + str(x_ventana) + "+" + str(y_ventana)
@@ -37,8 +39,10 @@ class Editar_Grafo(Frame):
         self.botonCambiarInicial.place(x=650,y=20)
         self.botonCambiarFinal = Button(text="CAMBIAR FINAL", command=lambda:Cambiar_Nodo_Final(controller, master=self))
         self.botonCambiarFinal.place(x=780,y=20)
+        self.botonCambiarHeuristica = Button(text="CAMBIAR HEURISTICA", command=lambda:Cambiar_Heuristica(controller, master=self))
+        self.botonCambiarHeuristica.place(x=910,y=20)
         self.botonVolverPantallaAnterior = Button(text="VOLVER", command=lambda:self.volverPantallaAnterior(parent, controller))
-        self.botonVolverPantallaAnterior.place(x=265,y=450)
+        self.botonVolverPantallaAnterior.place(x=390,y=510)
 
         self.f=controller.getFigura()
         self.canvas1 = FigureCanvasTkAgg(self.f, self)
@@ -58,6 +62,7 @@ class Editar_Grafo(Frame):
         banderaVolver = controller.comprobarRelaciones()
         if(banderaVolver==1):
             controller.LimpiarArbol()
+            controller.actualizarDatosGrafo()
             parent.mostrarFrameMostrar_Solucion()
         else:
             messagebox.showwarning("Advertencia","No puede dejar NODOS sin RELACIONES")
