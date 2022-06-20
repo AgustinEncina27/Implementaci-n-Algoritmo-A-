@@ -9,16 +9,16 @@ class Eliminar_Nodo(Toplevel):
         super().__init__(master = master)
         self.title("Eliminar Nodo")
         x_ventana = master.winfo_screenwidth() // 2 - 500 // 2
-        y_ventana = master.winfo_screenheight() // 2 - 250 // 2
-        posicion = str(500) + "x" + str(250) + "+" + str(x_ventana) + "+" + str(y_ventana)
+        y_ventana = master.winfo_screenheight() // 2 - 100 // 2
+        posicion = str(500) + "x" + str(100) + "+" + str(x_ventana) + "+" + str(y_ventana)
         self.geometry(posicion)
 
         lbl1=Label(self,text="Ingrese el NODO a ELIMINAR:")
-        lbl1.place(x=5,y=40)
+        lbl1.grid(row=1,column=1,padx=10,pady=15)
         nodoAEliminar=Entry(self)
-        nodoAEliminar.place(x=170,y=40)
+        nodoAEliminar.grid(row=1,column=2,padx=20,pady=15)
 
-        botonCreacion=Button(self,text="ELIMINAR NODO",command=lambda:self.eliminarNodo(nodoAEliminar.get(),controller, master)).place(x=330,y=70)
+        botonCreacion=Button(self,text="ELIMINAR NODO",command=lambda:self.eliminarNodo(nodoAEliminar.get(),controller, master)).grid(row=1,column=3,padx=20,pady=10)
 
     def eliminarNodo(self, nodoAEliminar, controller, master):
         if(not(nodoAEliminar.isdecimal())):

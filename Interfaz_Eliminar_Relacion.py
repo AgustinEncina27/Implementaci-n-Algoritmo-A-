@@ -9,21 +9,21 @@ class Eliminar_Relacion(Toplevel):
         super().__init__(master = master)
         self.title("Eliminar Relacion")
         x_ventana = master.winfo_screenwidth() // 2 - 500 // 2
-        y_ventana = master.winfo_screenheight() // 2 - 250 // 2
-        posicion = str(500) + "x" + str(250) + "+" + str(x_ventana) + "+" + str(y_ventana)
+        y_ventana = master.winfo_screenheight() // 2 - 150 // 2
+        posicion = str(500) + "x" + str(150) + "+" + str(x_ventana) + "+" + str(y_ventana)
         self.geometry(posicion)
 
         lbl1=Label(self,text="Ingrese el NODO 1:")
-        lbl1.place(x=5,y=40)
+        lbl1.grid(row=1,column=1,padx=10,pady=15)
         nodo1AEliminar=Entry(self)
-        nodo1AEliminar.place(x=170,y=40)
+        nodo1AEliminar.grid(row=1,column=2,padx=20,pady=15)
 
         lbl2=Label(self,text="Ingrese el NODO 2:")
-        lbl2.place(x=5,y=70)
+        lbl2.grid(row=2,column=1,padx=10,pady=10)
         nodo2AEliminar=Entry(self)
-        nodo2AEliminar.place(x=170,y=70)
+        nodo2AEliminar.grid(row=2,column=2,padx=20,pady=10)
 
-        botonCreacion=Button(self,text="ELIMINAR RELACION",command=lambda:self.cargarNuevoNodoEditar(nodo1AEliminar.get(), nodo2AEliminar.get(),controller, master)).place(x=330,y=70)
+        botonCreacion=Button(self,text="ELIMINAR RELACION",command=lambda:self.cargarNuevoNodoEditar(nodo1AEliminar.get(), nodo2AEliminar.get(),controller, master)).grid(row=2,column=3,padx=20,pady=10)
 
     def cargarNuevoNodoEditar(self, nodo1AEliminar, nodo2AEliminar, controller, master):
         if(not(nodo1AEliminar.isdecimal()) or not(nodo2AEliminar.isdecimal())):

@@ -1,4 +1,5 @@
 from Grafica_Grafo import Grafo
+from Interfaz_Heuristicas import Heuristicas
 from algoritmo_A import *
 
 class Controller:
@@ -117,15 +118,26 @@ class Controller:
         return self.a.comprobarRelaciones()
     
     def actualizarDatosGrafo(self):
+        Heuristicas = []
         for nodo in self.a.getGrafo():
             if(nodo.inicial):
                 a=nodo.id
         for nodo in self.a.getGrafo():
+            Heuristicas.append([nodo.id,nodo.h])
             if(nodo.final):
                 b=nodo.id
         self.c=[a,b]
         self.a.LimpiarListaGrafo()
         self.a.CargaARegistro(self.c)
+        for a in Heuristicas:
+            print(str(a[0]) + " " + str(a[1]))
+            self.cambiarHGrafo(a[0],a[1])
+    
+    def comprobarNodoValidoHeuristica(self, nodo):
+        if(nodo in self.a.G.nodes()):
+            return 1
+        else:
+            return 2
 
 
     
