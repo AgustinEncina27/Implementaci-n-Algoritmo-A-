@@ -84,6 +84,13 @@ class Controller:
     def mostrarTextoSolucion(self):
         return  self.algoritmo.mostrarTextoSolucion()
     
+    #Nos muestra las heuristicas
+    def mostrarHeuristica(self):
+        texto='HEURÍSTICAS\n\n\n\n'
+        for n in self.a.getGrafo():
+            texto=texto+n.mostrarId()+'='+str(n.getH())+'\n'
+        return  texto
+    
     #Iniciliza la solucion de forma parcial
     def cargarDatosIniciales(self):
         return  self.algoritmo.IniciarVariablesPasoAPaso(self.a.getGrafo())

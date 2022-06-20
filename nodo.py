@@ -17,8 +17,13 @@ class Nodo:
     def calcularF(self):
         self.f = self.g + self.h
 
+    #Asigna el h al nodo
     def asignarH(self,h):
         self.h = h
+    
+    #Retorna el h 
+    def getH(self):
+        return self.h
 
     def calcularDistanciaAlNodoFinal(self):
         pass

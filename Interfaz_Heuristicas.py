@@ -51,7 +51,7 @@ class Heuristicas(Frame):
         #Labels y cuadros de textos
         for j in nodos:
             if(j!=final):
-                Label(segundo_Frame,text=f'Ingrese la Euristica del NODO '+str(j)+' :').grid(row=cont,column=0,pady=10,padx=10)
+                Label(segundo_Frame,text=f'Ingrese la Heurística del NODO '+str(j)+' :').grid(row=cont,column=0,pady=10,padx=10)
                 a=Entry(segundo_Frame)
                 a.grid(row=cont,column=1,pady=10,padx=10)
                 lista1[j]=a
