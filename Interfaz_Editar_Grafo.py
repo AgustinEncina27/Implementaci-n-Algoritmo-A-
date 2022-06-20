@@ -41,8 +41,8 @@ class Editar_Grafo(Frame):
         self.botonCambiarFinal.place(x=735,y=20)
         self.botonCambiarHeuristica = Button(text="CAMBIAR HEURISTICA", command=lambda:Cambiar_Heuristica(controller, master=self))
         self.botonCambiarHeuristica.place(x=840,y=20)
-        self.botonVolverPantallaAnterior = Button(text="VOLVER", command=lambda:self.volverPantallaAnterior(parent, controller))
-        self.botonVolverPantallaAnterior.place(x=470,y=480)
+        self.botonVolverPantallaAnterior = Button(text="VOLVER A LA PESTAÑA DE SOLUCIÓN", command=lambda:self.volverPantallaAnterior(parent, controller))
+        self.botonVolverPantallaAnterior.place(x=400,y=480)
 
         self.f=controller.getFigura()
         self.canvas1 = FigureCanvasTkAgg(self.f, self)

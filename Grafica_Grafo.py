@@ -132,7 +132,7 @@ class Grafo():
 		
 		#Creación aleatoria de aristas con Bernoulli y números aleatorios enteros para el peso de cada arista
 		b= num2 
-		p=0.7
+		p=0.5
 		contador=0
 		while contador<b:
 			for node1 in self.G.nodes():
