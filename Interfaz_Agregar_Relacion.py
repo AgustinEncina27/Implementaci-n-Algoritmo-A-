@@ -10,26 +10,26 @@ class Agregar_Relacion(Toplevel):
         super().__init__(master = master)
         self.title("Agregar Relacion")
         x_ventana = master.winfo_screenwidth() // 2 - 500 // 2
-        y_ventana = master.winfo_screenheight() // 2 - 250 // 2
-        posicion = str(500) + "x" + str(250) + "+" + str(x_ventana) + "+" + str(y_ventana)
+        y_ventana = master.winfo_screenheight() // 2 - 200 // 2
+        posicion = str(500) + "x" + str(200) + "+" + str(x_ventana) + "+" + str(y_ventana)
         self.geometry(posicion)
 
         lbl1=Label(self,text="Ingrese el NODO 1:")
-        lbl1.place(x=5,y=40)
+        lbl1.grid(row=1,column=1,padx=10,pady=15)
         nodo1=Entry(self)
-        nodo1.place(x=170,y=40)
+        nodo1.grid(row=1,column=2,padx=20,pady=15)
 
         lbl2=Label(self,text="Ingrese el NODO 2:")
-        lbl2.place(x=5,y=70)
+        lbl2.grid(row=2,column=1,padx=10,pady=10)
         nodo2=Entry(self)
-        nodo2.place(x=170,y=70)
+        nodo2.grid(row=2,column=2,padx=20,pady=10)
 
         lbl2=Label(self,text="Ingresar COSTO de la relación:")
-        lbl2.place(x=5,y=100)
+        lbl2.grid(row=3,column=1,padx=10,pady=10)
         relaciones=Entry(self)
-        relaciones.place(x=170,y=100)
+        relaciones.grid(row=3,column=2,padx=20,pady=10)
 
-        botonCreacion=Button(self,text="AGREGAR RELACIÓN",command=lambda:self.cargarRelacionEditar(nodo1.get(), nodo2.get(),relaciones.get(),controller, master)).place(x=330,y=70)
+        botonCreacion=Button(self,text="AGREGAR RELACIÓN",command=lambda:self.cargarRelacionEditar(nodo1.get(), nodo2.get(),relaciones.get(),controller, master)).grid(row=3,column=3,padx=20,pady=10)
 
     def cargarRelacionEditar(self, nodo1, nodo2, relaciones, controller, master):
         if(not(nodo1.isdecimal()) or not(nodo2.isdecimal()) or not(relaciones.isdecimal())):

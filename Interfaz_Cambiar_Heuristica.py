@@ -32,10 +32,11 @@ class Cambiar_Heuristica(Toplevel):
             if(str(nodo)=="" or str(nuevaHeuristica)==""):
                 messagebox.showwarning("Advertencia","Ingrese el NODO y la HEURISTICA por favor")
             else:
-                bandera = controller.cambiarHGrafo(int(nodo), int(nuevaHeuristica))
-                if(bandera==2):
-                    messagebox.showwarning("Advertencia","Ingrese unicamente un NODO VALIDO")
-                else:
+                bandera = controller.comprobarNodoValidoHeuristica(int(nodo))
+                if(bandera==1):
+                    controller.cambiarHGrafo(int(nodo), int(nuevaHeuristica))
                     master.refrescarFigura(controller)
+                else:
+                    messagebox.showwarning("Advertencia","Ingrese unicamente un NODO VALIDO")                    
         self.destroy()
         self.update()

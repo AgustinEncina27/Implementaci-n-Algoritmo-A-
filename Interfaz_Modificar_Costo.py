@@ -8,27 +8,27 @@ class Modificar_Costo_Relacion(Toplevel):
         
         super().__init__(master = master)
         self.title("Modificar Costo de la Relacion")
-        x_ventana = master.winfo_screenwidth() // 2 - 500 // 2
-        y_ventana = master.winfo_screenheight() // 2 - 250 // 2
-        posicion = str(500) + "x" + str(250) + "+" + str(x_ventana) + "+" + str(y_ventana)
+        x_ventana = master.winfo_screenwidth() // 2 - 600 // 2
+        y_ventana = master.winfo_screenheight() // 2 - 200 // 2
+        posicion = str(600) + "x" + str(200) + "+" + str(x_ventana) + "+" + str(y_ventana)
         self.geometry(posicion)
 
         lbl1=Label(self,text="Ingrese el NODO 1:")
-        lbl1.place(x=5,y=40)
+        lbl1.grid(row=1,column=1,padx=10,pady=15)
         nodo1=Entry(self)
-        nodo1.place(x=170,y=40)
+        nodo1.grid(row=1,column=2,padx=20,pady=15)
 
         lbl2=Label(self,text="Ingrese el NODO 2:")
-        lbl2.place(x=5,y=70)
+        lbl2.grid(row=2,column=1,padx=10,pady=10)
         nodo2=Entry(self)
-        nodo2.place(x=170,y=70)
+        nodo2.grid(row=2,column=2,padx=20,pady=10)
 
         lbl2=Label(self,text="Ingresar NUEVO COSTO de la relación:")
-        lbl2.place(x=5,y=100)
+        lbl2.grid(row=3,column=1,padx=10,pady=10)
         nuevoCosto=Entry(self)
-        nuevoCosto.place(x=250,y=100)
+        nuevoCosto.grid(row=3,column=2,padx=20,pady=10)
 
-        botonCreacion=Button(self,text="MODIFICAR COSTO",command=lambda:self.modificarCostoRelacionGrafica(nodo1.get(), nodo2.get(),nuevoCosto.get(),controller, master)).place(x=330,y=70)
+        botonCreacion=Button(self,text="MODIFICAR COSTO",command=lambda:self.modificarCostoRelacionGrafica(nodo1.get(), nodo2.get(),nuevoCosto.get(),controller, master)).grid(row=3,column=3,padx=20,pady=10)
 
     def modificarCostoRelacionGrafica(self, nodo1, nodo2, nuevoCosto, controller, master):
         if(not(nodo1.isdecimal()) or not(nodo2.isdecimal()) or not(nuevoCosto.isdecimal())):

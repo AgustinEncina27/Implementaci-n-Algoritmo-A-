@@ -9,21 +9,21 @@ class Agregar_Nodo(Toplevel):
         super().__init__(master = master)
         self.title("Agregar Nodo")
         x_ventana = master.winfo_screenwidth() // 2 - 500 // 2
-        y_ventana = master.winfo_screenheight() // 2 - 250 // 2
-        posicion = str(500) + "x" + str(250) + "+" + str(x_ventana) + "+" + str(y_ventana)
+        y_ventana = master.winfo_screenheight() // 2 - 125 // 2
+        posicion = str(500) + "x" + str(125) + "+" + str(x_ventana) + "+" + str(y_ventana)
         self.geometry(posicion)
 
         lbl1=Label(self,text="Ingrese el nuevo NODO:")
-        lbl1.place(x=5,y=40)
+        lbl1.grid(row=1,column=1,padx=10,pady=15)
         nodoNuevo=Entry(self)
-        nodoNuevo.place(x=170,y=40)
+        nodoNuevo.grid(row=1,column=2,padx=20,pady=15)
 
         lbl2=Label(self,text="Ingrese la heuristica:")
-        lbl2.place(x=5,y=70)
+        lbl2.grid(row=2,column=1,padx=10,pady=10)
         heurisitca=Entry(self)
-        heurisitca.place(x=170,y=70)
+        heurisitca.grid(row=2,column=2,padx=20,pady=10)
 
-        botonCreacion=Button(self,text="AGREGAR NODO",command=lambda:self.cargarNuevoNodoEditar(nodoNuevo.get(), heurisitca.get(),controller, master)).place(x=330,y=70)
+        botonCreacion=Button(self,text="AGREGAR NODO",command=lambda:self.cargarNuevoNodoEditar(nodoNuevo.get(), heurisitca.get(),controller, master)).grid(row=2,column=3,padx=20,pady=10)
 
     def cargarNuevoNodoEditar(self, nuevoNodo, heuristica, controller, master):
         if(not(nuevoNodo.isdecimal()) or not(heuristica.isdecimal())):
